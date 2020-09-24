@@ -17,9 +17,9 @@ public class Operation_worksheet {
 		System.out.println(avg);
 	}
 	
-	public void main(String[] args) {
+	public static void main(String[] args) {
 		Operation_worksheet runner = new Operation_worksheet();
-		runner.Integer_to_character(98);
+		runner.Integer_to_character(98);  
 		runner.Print_last_digit(1234);
 		runner.Exact_Average(54,23);
 		
