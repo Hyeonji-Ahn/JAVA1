@@ -10,10 +10,8 @@ public class Operation_worksheet {
 		System.out.println(lastdigit);
 	}
 	
-	public void Exact_Average(int x, int y) {
-		double dx =  x;
-		double dy = y;
-		double avg = (dx+dy)/2;
+	public void Exact_Average(double x, double y) {
+		double avg = (x+y)/2;
 		System.out.println(avg);
 	}
 	
