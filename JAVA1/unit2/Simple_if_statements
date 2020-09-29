@@ -1,0 +1,96 @@
+package unit2;
+
+public class Simple_if_statements {
+	public void PositiveorNegative(int x) {
+	// A method that takes as parameter an integer, and determines if it is positive. If positive, print "yes", otherwise print "no".
+			if (x>0) {
+				System.out.println("yes");
+			}else {
+				System.out.println("no");
+			}
+	}
+	
+	public void EvenOdd(int x) {
+	//A method that takes an integer as parameter, and determines if it is even or odd. (Use one of your 5 operators to do this easily)
+		if (x%2 ==0) {
+			System.out.println("even");
+		}else {
+			System.out.println("odd");
+		}
+	}
+		
+	public void Letters(char ch) {
+		//A method that takes a character as parameter, and determines if it is uppercase, lowercase, or neither. 
+		if ((int)ch < 91) {
+			System.out.println("uppercase");
+		}else if((int)ch >= 97) {
+			System.out.println("lowercase");
+		}else {
+			System.out.println("neither");
+		}
+	}
+			
+	public void Multiplesof10(int x) {
+		//A method that takes an integer as parameter, and determines if it is a multiple of 10.
+		if(x %10 ==0) {
+			System.out.println("it is multiple of 10");
+		}
+	}
+	
+	public void Biggestofthree (double x, double y, double z) {
+		//A method that takes three doubles as parameters, and prints out the biggest of the three (this is a maximum function).
+	
+		double biggest;
+		
+		if(x>y) {
+			if(x>z) {
+				biggest = x;
+			}else {
+				biggest = z;
+			}
+		}else {
+			if(y>z) {
+				biggest = y;
+			}else {
+				biggest = z;
+			}
+		}
+		System.out.println(biggest);
+	}
+	
+	/*Challenge (if you finish before class is over): Using only the operators we have learned so far, 
+	  write a method that takes a double as input, and determines whether it is a whole number or not 
+	  (2.0 is a whole number, 2.6 is not).
+	  
+	  */
+	
+	public void Wholenumber (double x) {
+		if (x % 1==0) {
+			System.out.println("it is a whole number");
+		}else {
+			System.out.println("it is not a whole number");
+		}
+	}
+	
+		
+	public static void main(String[] args) {
+		
+		int x = 5;
+		char ch1 = 'A';
+		double a = 1.5;
+		double b = 1.4;
+		double c = 1.3;
+		
+		Simple_if_statements tester = new Simple_if_statements();
+		
+		tester.PositiveorNegative(x);
+		tester.EvenOdd(5);
+		tester.Multiplesof10(x);
+		tester.Letters(ch1);
+		tester.Biggestofthree(a, b, c);
+		tester.Wholenumber(a);
+		
+		
+		
+	}
+}
