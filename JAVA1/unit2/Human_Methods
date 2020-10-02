@@ -1,0 +1,68 @@
+package unit2;
+
+
+public class Human_Methods {
+	int age;
+	char gender;
+	
+	public void setAge(int age) {
+		this.age = age;
+	}
+	
+	public void setGender(char gender) {
+		this.gender = gender;
+	}
+	
+	public void voting() {
+		if(age>=18) {
+			System.out.println("You can vote");
+		}
+	}
+	
+	public void tetanus_shot() {
+		if(age%4 == 0) {
+			System.out.println("You need tentanus shot.");
+		}
+	}
+	
+	public void toddler() {
+		if(age<4 && gender=='b') {
+			System.out.println("You are toddler boy.");
+		}else if(age<4 && gender=='g') {
+			System.out.println("You are toddler boy.");
+		}else {
+			System.out.println("You are not a toddler.");
+		}
+	}
+	
+	public void movie_discount() {
+		if(age>65 && age<12) {
+			System.out.println("You can get a movie discount");
+		}
+	}
+	
+	public void teenager() {
+		if(age>=12 && age<=18) {
+			System.out.println("You are a teenager");
+		}
+	}
+	
+	public void teammates(int age2, char gender2) {
+		if(gender2==gender && (age2-age<=2 || age-age2<2)) {
+			System.out.println("You can be teammates.");
+		}
+	}
+	
+	public static void main(String[] args) {
+		Human_Methods tester = new Human_Methods();
+		
+		tester.setGender('g');
+		tester.setAge(16);
+		tester.voting();
+		tester.tetanus_shot();
+		tester.toddler();
+		tester.movie_discount();
+		tester.teenager();
+		tester.teammates(14, 'g');
+	}
+}
