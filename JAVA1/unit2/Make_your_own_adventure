@@ -1,0 +1,305 @@
+// Tiffany Ahn's Adventure Project
+// I got help from Mr.David's Adventure_Better.java
+
+package unit2;
+
+import java.util.Scanner;
+
+public class Make_Your_Own_Adventure {
+	private Scanner input = new Scanner(System.in);
+	private String name;
+	
+	//introduction of story
+	public void Introduction() {
+		System.out.println("Hello! What is your name?");
+		String name = input.nextLine();
+		this.name = name;
+		System.out.println("Oh! Hi "+name+" I am Tiffany, nice to meet you!");
+		System.out.println("I think it is your first time to be in a Korean school.");
+		System.out.println("In Korean school, your goal is to get great grades and make many friends.");
+		first_question();
+	}
+	
+	//different introduction after game over.
+	public void gameover_Introduction() {
+		System.out.println("Nice to meet you again "+name+"!");
+		System.out.println("It is so sad that you could not be successful at the last school, still, it is okay!!");
+		System.out.println("I will lead you from the first step again.");
+		System.out.println("I hope you can get great grades and make many friends at this time.");
+		first_question();
+	}
+	//method for first question
+	public void first_question() {
+		System.out.println("First, you should wear a school uniform, how do you want to wear it?");
+		first_decision();
+	}
+	
+	//method for receiving first decision from user
+	public void first_decision() {
+		System.out.println("1: wear it formerly.");
+		System.out.println("2: wear it casually.");
+		int answer = input.nextInt();
+		if(answer == 1) {
+			formal();
+		}else if(answer == 2) {
+			casual();
+		}else {
+			wrong_answer("first");
+		}
+	}
+	
+	//question for formal cloth
+	public void formal() {
+		System.out.println("Now, you are in school, where do you want to sit?");
+		formal_decision();
+	}
+	
+	//method for receiving decision for row from user
+	public void formal_decision() {
+		System.out.println("1: Front row");
+		System.out.println("2: Middle row");
+		int answer = input.nextInt();
+		if(answer == 1) {
+			front_row();
+		}else if(answer == 2 ) {
+			middle_row();
+		}else {
+			wrong_answer("formal");
+		}
+	}
+	
+	//question for front row
+	public void front_row() {
+		System.out.println("Classmates that think you are model students.");
+		System.out.println("However, due to that, classmates start to copy your assignments.");
+		System.out.println("How do you want to do with it?");
+		front_row_decision();
+	}
+	
+	//method for receiving decision from user
+	public void front_row_decision() {
+		System.out.println("1: tell to a teacher");
+		System.out.println("2: teach homework to classmate, not allowing them to copy it.");
+		int answer = input.nextInt();
+		if(answer == 1) {
+			bullied_telling_teacher();
+		}else if(answer == 2 ) {
+			teach_homework();
+		}else {
+			wrong_answer("front");
+		}
+	}
+	//one possible bad ending
+	public void bullied_telling_teacher() {
+		System.out.println("you got bullied by other children by telling to the teacher.");
+		System.out.println(" You had no choice but to move to other schools.");
+		gameover();
+	}
+	//method for when user decided to teach homework.
+	public void teach_homework() {
+		System.out.println("students think that you are so kind.");
+		System.out.println("You became class president by recommendation of your classmates.");
+		System.out.println("After a few months, the final test come.");
+		System.out.println("Will you study?");
+		teach_homework_decision();
+	}
+	
+	//receiving decision from user about studying in academy
+	public void teach_homework_decision() {
+		System.out.println("1: Yes");
+		System.out.println("2: No");
+		int answer = input.nextInt();
+		if(answer == 1) {
+			study();
+		}else if(answer==2) {
+			no_study();
+		}else {
+			wrong_answer("teach homework");
+		}
+	}
+	
+	//method for when user decided to study
+	public void study() {
+		System.out.println("Even though you study, you could not get a great score.");
+		System.out.println("What do you want to do for the next test?");
+		academy_decision();
+	}
+	
+	//method for when user decided to not study
+	public void no_study() {
+		System.out.println("Definitely you got a bad grade.");
+		System.out.println("So, in the next test, you decided to study.");
+		System.out.println("What do you want to do?");
+		academy_decision();
+	}
+	
+	//decision for how to study
+	public void academy_decision() {
+		System.out.println("1: Attend the private academy");
+		System.out.println("2: Study by yourself");
+		int answer = input.nextInt();
+		if(answer == 1) {
+			academy_ending();
+		}else if(answer==2) {
+			study_alone_ending();
+		}else {
+			wrong_answer("academy");
+		}
+	}
+	
+	//possible good anding
+	public void academy_ending() {
+		System.out.println("In the academy, you studied hard and also made great friends.");
+		System.out.println("You finished your year successfully!");
+		System.out.println("Congratulations!");
+	}
+	
+	//possible bad ending
+	public void study_alone_ending() { 
+		System.out.println("Even though you study by yourself, ");
+		System.out.println("you could not reach the top class. ");
+		System.out.println(" You made lots of friends, but you could not get a good grade.");
+		gameover();
+	}
+	
+	//method for selecting middle row
+	public void middle_row() {
+		System.out.println("Classmates got interested in you and start to ask a lot of questions.");
+		System.out.println("Two groups of students want to spend time with you after school.");
+		System.out.println("Who do you want to play with?");
+		middle_row_decision();
+	}
+	
+	//method for deciding how to deal with friends
+	public void middle_row_decision() {
+		System.out.println("1: Go to karaoke with bullies");
+		System.out.println("2: Play with normal classmates");
+		int answer = input.nextInt();
+		if(answer == 1) {
+			bully_ending();
+		}else if(answer == 2) {
+			play_with_classmates();
+		}else {
+			wrong_answer("middle_row");
+		}
+	}
+	
+	//possible bad ending
+	public void bully_ending() {
+		System.out.println("you became one of the bullies.");
+		System.out.println("You got a bad score in school, and you went to the juvenile center by bullying people.");
+		gameover();
+	}
+	
+	// method for choosing classmate
+	public void play_with_classmates() {
+		System.out.println("you begin to study and play with classmates now.");
+		System.out.println("A few months passed, the final test comes.");
+		System.out.println("Do you want to study?");
+		teach_homework_decision();
+	}
+	
+	//question for casual
+	public void casual() {
+		System.out.println("Now, you are in school, where do you want to sit?");
+		casual_decision();
+	}
+	
+	//method for receiving decision for row from user
+	public void casual_decision() {
+		System.out.println("1: Middle row");
+		System.out.println("2: Back row");
+		int answer = input.nextInt();
+		if(answer == 1) {
+			middle_row();
+		}else if(answer == 2 ) {
+			back_row();
+		}else {
+			wrong_answer("casual");
+		}
+	}
+	
+	//method for choosing back row
+	public void back_row() {
+		System.out.println("Bullies think you are interesting.");
+		System.out.println("They come to you and start to talk to you.");
+		System.out.println("They want you to go to karaoke with them.");
+		System.out.println("Do you want to go?");
+		back_row_decision();
+		
+	}
+	
+	//decision method for back_row
+	public void back_row_decision() {
+		System.out.println("1: Yes");
+		System.out.println("2: No");
+		int answer = input.nextInt();
+		if(answer == 1) {
+			bully_ending();
+		}else if(answer == 2 ) {
+			bullied_ending();
+		}else {
+			wrong_answer("back row");
+		}
+	}
+	
+	//possible bad ending
+	public void bullied_ending() {
+		System.out.println("You got bullied by other children by ignoring them.");
+		System.out.println("You had no choice but to move to other schools.");
+		gameover();
+	}
+	//method for game over and restart
+	public void gameover() {
+		System.out.println("");
+		System.out.println("I am so sad that you could not reach your goal,"+name);
+		gameover_decision();
+	}
+		
+	//decision for continuing the game or not
+	public void gameover_decision() {
+		System.out.println("Do you want to start again? (y/n)");
+		String answer = input.next();
+		if(answer.equals("y") || answer.equals("Y")) {
+			gameover_Introduction();
+		}else if(answer.equals("n") || answer.equals("N")) {
+			System.out.println("-------------GAME OVER------------");
+		}else {
+			wrong_answer("gameover");
+		}
+	}
+	
+	//method for wrong answers
+	public void wrong_answer(String question) {
+		System.out.println("What " + name + " ? Could you tell it again?");
+		if (question.equals( "first")) {
+			first_decision();
+		}else if (question.equals("formal")) {
+			formal_decision();
+		}else if(question.equals("front")) {
+			front_row_decision();
+		}else if(question.equals("gameover")) {
+			gameover_decision();
+		}else if(question.equals("teach homework")){
+			teach_homework_decision();
+		}else if(question.equals("academy")){
+			academy_decision();
+		}else if(question.equals("middle_row")) {
+			middle_row_decision();
+		}else if(question.equals("casual")) {
+			casual_decision();
+		}else if(question.equals("back row")) {
+			back_row_decision();
+		}else {
+			System.out.println("error");
+		}
+	}
+	
+	//main method
+	public static void main(String[] args) {
+		Make_Your_Own_Adventure start = new Make_Your_Own_Adventure();
+		start.Introduction();
+	}
+}
+
+
