@@ -1,0 +1,79 @@
+package unit2;
+
+import java.util.Scanner;
+
+public class Scanner_HW {
+	private double x;
+	private String y;
+	private Scanner input = new Scanner(System.in);
+	
+	public void starter() {
+		System.out.println("enter double:");
+		x = input.nextDouble();
+		starter_2();
+	}
+	
+	public void starter_2(){
+		System.out.println("type s / e / d / w:");
+		y = input.next();
+		if(y.equals("s")) {
+			square_root();
+		}else if(y.equals("e")) {
+			even_odd();
+		}else if(y.equals("d")) {
+			factor();
+		}else if(y.equals("w")) {
+			within_3();
+		}else {
+			wrong_answer();
+		}
+	}
+	
+	public void square_root() {
+		System.out.println(Math.sqrt(x));
+		starter();
+	}
+	
+	public void even_odd() {
+		if(x % 2 == 0) {
+			System.out.println(x+" is even");
+		}else if(x % 2 == 1) {
+			System.out.println(x+" is odd");
+		}else {
+			System.out.println(x+" is not a whole number");
+		}
+		starter();
+	}
+	
+	public void factor() { 
+		System.out.println("enter double:");
+		double z = input.nextDouble();
+		if(x % z == 0) {
+			System.out.println(z+" is factor of "+x);
+		}else {
+			System.out.println(z+" is factor of "+x);
+		}
+		starter();
+	}
+	
+	public void within_3() {
+		System.out.println("enter double:");
+		double z = input.nextDouble();
+		if(x-z<= 3 || z-x <= 3) {
+			System.out.println(z+" is within 3 of "+x);
+		}else {
+			System.out.println(z+" is not within 3 of "+x);
+		}
+		starter();
+	}
+	
+	public void wrong_answer() {
+		System.out.println("Wrong answer.");
+		starter_2();
+	}
+	
+	public static void main(String[] args) {
+		Scanner_HW runner=  new Scanner_HW();
+		runner.starter();
+	}
+}
