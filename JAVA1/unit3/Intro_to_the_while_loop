@@ -1,0 +1,66 @@
+package unit3;
+
+import java.util.Scanner;
+
+public class Intro_to_the_while_loop {
+	private Scanner input = new Scanner(System.in);
+	
+	public void print_all_numbers(){
+		
+		System.out.println("enter integer:");
+		int a = input.nextInt();
+		System.out.println("enter integer:");
+		int b = input.nextInt();
+		int count=a;
+		
+		while(count<=b) {
+			System.out.println(count);
+			count++;
+		}
+	}
+	// linear & indefinite loop
+	
+	
+	public void exponential() {
+		System.out.println("enter double:");
+		double base = input.nextDouble();
+		System.out.println("enter double:");
+		double coefficient = input.nextDouble();
+		int count = 0;
+		
+		while(count<=5) {
+			System.out.println(Math.pow(base, count)*coefficient);
+			count++;
+		}
+	}
+	//constant & definite finite loop
+	
+	
+	public void root() {
+		System.out.println("enter integer:");
+		int a = input.nextInt();
+		int count = 1;
+		while (count<=a){
+			if(a / count==count) {
+				System.out.println(count);
+				break;
+			}else {
+				count++;
+				if(count == a) {
+					System.out.println("does not have a root");
+				}
+				continue;
+				
+			}
+		}
+	}
+	//linear & indefinite loops
+	
+	public static void main(String[] args) {
+		Intro_to_the_while_loop runner = new Intro_to_the_while_loop();
+		runner.print_all_numbers();
+		runner.exponential();
+		runner.root();
+	}
+}
+
