@@ -39,19 +39,16 @@ public class Intro_to_the_while_loop {
 	public void root() {
 		System.out.println("enter integer:");
 		int a = input.nextInt();
-		int count = 1;
+		int count = 0;
 		while (count<=a){
-			if(a / count==count) {
-				System.out.println(count);
+			if(count * count == a) {
+				System.out.println("the sqrt of "+a+" is "+ count);
 				break;
-			}else {
-				count++;
-				if(count == a) {
-					System.out.println("does not have a root");
-				}
-				continue;
-				
 			}
+			count++;		
+		}
+		if(count*count != a) {
+			System.out.println(a+ " does not have square root");
 		}
 	}
 	//linear & indefinite loops
