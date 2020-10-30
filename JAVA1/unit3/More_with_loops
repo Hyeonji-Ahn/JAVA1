@@ -1,0 +1,110 @@
+package unit3;
+
+import java.util.Scanner;
+
+
+public class More_with_loops {
+	private Scanner input = new Scanner(System.in);
+	
+	//easy 1
+	//Indefinite / linear
+	public void magic_number() {
+		int magic_number = 2;
+		int user_input = 0;
+		while (user_input!= magic_number) {
+			System.out.println("type number:");
+			user_input = input.nextInt();
+		}
+		System.out.println("Correct!!");
+	}
+	
+	//easy2
+	//Indefinite / linear
+	public void print_n_to_negative() {
+		System.out.println("type number:");
+		int user_input = input.nextInt();
+		int count = user_input*-1;
+		while (count<=user_input) {
+			System.out.println(count);
+			count ++;
+		}
+	}
+	
+	//medium 1
+	//Indefinite / linear
+	public void factorial() {
+		System.out.println("type number:");
+		int user_input = input.nextInt();
+		int count = 1;
+		int factorial = 1;
+		while (count<=user_input) {
+			factorial = factorial * count;
+			count ++;
+		}
+		System.out.println(factorial);
+		
+	}
+	
+	//medium 2
+	//Indefinite / linear
+	public void play_game() {
+		boolean game_end =false;
+		while(!game_end) {
+			System.out.println("Do you want to keep playing? ( yes / no )");
+			String answer = input.next();
+			if(answer.equals("yes")) {
+				continue;
+			}else if(answer.equals("no")) {
+				System.out.println("GAME OVER");
+				break;
+			}
+		}
+	}
+	
+	//hard 1
+	//Indefinite / linear
+	public void greatest_common_divisor() {
+		System.out.println("type number:");
+		int user_input_a = input.nextInt();
+		System.out.println("type number:");
+		int user_input_b = input.nextInt();
+		int count = 1;
+		int greatest_common_divisor = 1;
+		while(count <=user_input_a && count <=user_input_b) {
+			if(user_input_a % count == 0 && user_input_b % count == 0) {
+				greatest_common_divisor = count;
+			}
+			count ++;
+		}
+		System.out.println(greatest_common_divisor);
+	}
+	
+	//hard 2
+	//indefinite / linear
+	public void least_common_multiple() {
+		System.out.println("type number:");
+		int user_input_a = input.nextInt();
+		System.out.println("type number:");
+		int user_input_b = input.nextInt();
+		int greatest_common_divisor = 1;
+		int count = 1;
+		while(count <=user_input_a && count <=user_input_b) {
+			if(user_input_a % count == 0 && user_input_b % count == 0) {
+				greatest_common_divisor = count;
+			}
+			count ++;
+		}
+		int least_common_multiple = user_input_a * user_input_b / greatest_common_divisor;
+		System.out.println(least_common_multiple);
+	}
+	
+	public static void main(String[] args) {
+		More_with_loops runner=  new More_with_loops();
+		runner.magic_number();
+		runner.factorial();
+		runner.greatest_common_divisor();
+		runner.print_n_to_negative();
+		runner.play_game();
+		runner.least_common_multiple();
+	}
+}
