@@ -22,11 +22,11 @@ import javax.swing.JPanel;
 public class Pong_Tiffany_Ahn extends JPanel implements KeyListener {
 	
 	// constants that are predefined and won't change as the program runs
-	private final int WIDTH = 600, HEIGHT = 600, WINDOW_HEIGHT = 650;
+	private final int WIDTH = 600, HEIGHT = 600, WINDOW_HEIGHT = 650, I_WIDTH = 100, I_HEIGHT=50;
 	private final int PADDLE_WIDTH = 20, DIAM = 20, PADDLE_HEIGHT = 100;
 	private final int PADDLE_DOWN_WIDTH = 100, PADDLE_DOWN_HEIGHT = 20;
 	private final int PADDLE_SPEED = 10; 
-
+	private final int I_DIAM = 10, INTERVAL = 15;
 	
 	// your instance variables here, I've given you a few 
 	private boolean up1, down1, up2, down2,right1,left1,right2,left2; 		// booleans to keep track of paddle movement
@@ -41,11 +41,12 @@ public class Pong_Tiffany_Ahn extends JPanel implements KeyListener {
 	private int p2 = 0;														//score of player 2
 	private int long_x=(int)(Math.random()*WIDTH)+0 , long_y=0;  			// position of long item
 	private int short_x=(int)(Math.random()*WIDTH)+0 , short_y=0; 			// position of short item
+	private int ball_relocate_x=(int)(Math.random()*WIDTH)+0 , ball_relocate_y = 0;  //position of ball relocate item
 	private int p1_down_x = WIDTH/2 - PADDLE_DOWN_WIDTH;					// position of down paddle of player1
 	private int p2_down_x = WIDTH/2;										// position of down paddle of player1
 	private int font = 14;													//font size
-	private int ball_relocate_x=(int)(Math.random()*WIDTH)+0 , ball_relocate_y = 0;  //position of ball relocate item
-
+	
+	
 	// this method moves the ball at each timestep
 	public void move_ball() {
 		c_x += c_xspeed;
@@ -135,40 +136,43 @@ public class Pong_Tiffany_Ahn extends JPanel implements KeyListener {
 			p2_y = 0;
 		}
 		//relocating items from the bottom to top
-		if(short_y>=HEIGHT) {
+		if(short_y>=HEIGHT+I_DIAM) {
 			short_x = (int)(Math.random()*WIDTH)+0;
 			short_y=0;
 		}
-		if(long_y>=HEIGHT) {
+		if(long_y>=HEIGHT+I_DIAM) {
 			long_x = (int)(Math.random()*WIDTH)+0;
 			long_y=0;
 		}
-		if(ball_relocate_y>=HEIGHT) {
+		if(ball_relocate_y>=HEIGHT+I_DIAM) {
 			ball_relocate_x = (int)(Math.random()*WIDTH)+0;
 			ball_relocate_y=0;
 		}
 			
 	    //effect of "short" item
-		if(short_x>=p1_down_x && short_x+1.333*font<=p1_down_x+PADDLE_DOWN_WIDTH && short_y<=PADDLE_DOWN_HEIGHT) {
+		if(short_x>=p1_down_x && short_x+I_DIAM<=p1_down_x+PADDLE_DOWN_WIDTH && short_y<=PADDLE_DOWN_HEIGHT+I_DIAM) {
 			paddle_height2 -= 1;
+			
 		}
 			
-		if(short_x>=p2_down_x && short_x+1.333*font<=p2_down_x+PADDLE_DOWN_WIDTH && short_y<=PADDLE_DOWN_HEIGHT) {
+		if(short_x>=p2_down_x && short_x+I_DIAM<=p2_down_x+PADDLE_DOWN_WIDTH && short_y<=PADDLE_DOWN_HEIGHT+I_DIAM) {
 			paddle_height1 -= 1;
+		
 		}
 				
 		//effect of "long" item
-		if(long_x>=p1_down_x && long_x+1.333*font<=p1_down_x+PADDLE_DOWN_WIDTH && long_y<=PADDLE_DOWN_HEIGHT) {
+		if(long_x>=p1_down_x && long_x+I_DIAM<=p1_down_x+PADDLE_DOWN_WIDTH && long_y<=PADDLE_DOWN_HEIGHT+I_DIAM) {
 			paddle_height1 += 1;
+			
 		}
 				
-		if(long_x>=p2_down_x && long_x+1.333*font<=p2_down_x+PADDLE_DOWN_WIDTH && long_y<=PADDLE_DOWN_HEIGHT) {
+		if(long_x>=p2_down_x && long_x+I_DIAM<=p2_down_x+PADDLE_DOWN_WIDTH && long_y<=PADDLE_DOWN_HEIGHT+I_DIAM) {
 			paddle_height2 += 1;
 		}
 			
 		//effect of relocating item
-		if(ball_relocate_x>=p1_down_x && ball_relocate_x+1.333*font<=p1_down_x+PADDLE_DOWN_WIDTH && ball_relocate_y<=PADDLE_DOWN_HEIGHT
-			|| ball_relocate_x>=p2_down_x && ball_relocate_x+1.333*font<=p2_down_x+PADDLE_DOWN_WIDTH && ball_relocate_y<=PADDLE_DOWN_HEIGHT
+		if(ball_relocate_x>=p1_down_x && ball_relocate_x+I_DIAM<=p1_down_x+PADDLE_DOWN_WIDTH && ball_relocate_y<=PADDLE_DOWN_HEIGHT+I_DIAM
+			|| ball_relocate_x>=p2_down_x && ball_relocate_x+I_DIAM<=p2_down_x+PADDLE_DOWN_WIDTH && ball_relocate_y<=PADDLE_DOWN_HEIGHT+I_DIAM
 			) {
 			c_x=(int)(Math.random()*(WIDTH-10))+10;
 			c_y=HEIGHT/2;
@@ -206,17 +210,34 @@ public class Pong_Tiffany_Ahn extends JPanel implements KeyListener {
 		g.drawString("P1 Score: "+p1, WIDTH/5, 20);
 		g.drawString("P2 Score: "+p2, WIDTH*3/5, 20);
 		
+		//description of item
+		g.setColor(Color.gray);
+		g.fillRect(0, 0, I_WIDTH,I_HEIGHT);
+		
+		g.setColor(Color.green);
+		g.drawString("long",INTERVAL+I_DIAM,INTERVAL);
+		g.fillOval(0,0, I_DIAM, I_DIAM);
+		
+		g.setColor(Color.blue);
+		g.drawString("short",INTERVAL+I_DIAM,INTERVAL * 2);
+		g.fillOval(0,INTERVAL, I_DIAM, I_DIAM);
+		
+		g.setColor(Color.orange);
+		g.drawString("ball reset",INTERVAL+I_DIAM,INTERVAL * 3);
+		g.fillOval(0,INTERVAL*2, I_DIAM, I_DIAM);
+		
+		
 		//item "long"
 		g.setColor(Color.green);
-		g.drawString("long", long_x, long_y);
+		g.fillOval(long_x,long_y, I_DIAM, I_DIAM);
 		
 		//item "short"
 		g.setColor(Color.blue);
-		g.drawString("short",short_x,short_y);
+		g.fillOval(short_x,short_y, I_DIAM, I_DIAM);
 		
 		//item "ball_relocate"
 		g.setColor(Color.orange);
-		g.drawString("ball",ball_relocate_x,ball_relocate_y);
+		g.fillOval(ball_relocate_x,ball_relocate_y, I_DIAM, I_DIAM);
 		
 		
 		
