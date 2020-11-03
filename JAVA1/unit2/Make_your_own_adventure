@@ -167,7 +167,7 @@ public class Pong_Tiffany_Ahn extends JPanel implements KeyListener {
 			ball_relocate_y=0;
 		}
 			
-	    //effect of "short" item
+	    	//effect of "short" item
 		if(short_x>=p1_down_x && short_x+I_DIAM<=p1_down_x+PADDLE_DOWN_WIDTH && short_y+I_DIAM>=HEIGHT-PADDLE_DOWN_HEIGHT) {
 			paddle_height2 -= 1;
 		}
@@ -185,12 +185,13 @@ public class Pong_Tiffany_Ahn extends JPanel implements KeyListener {
 			paddle_height2 += 1;
 		}
 			
-		//effect of relocating item
+		//effect of ball relocating item
 		if(ball_relocate_x>=p1_down_x && ball_relocate_x+I_DIAM<=p1_down_x+PADDLE_DOWN_WIDTH && ball_relocate_y+I_DIAM>=HEIGHT-PADDLE_DOWN_HEIGHT
-			|| ball_relocate_x>=p2_down_x && ball_relocate_x+I_DIAM<=p2_down_x+PADDLE_DOWN_WIDTH && ball_relocate_y+I_DIAM>=HEIGHT-PADDLE_DOWN_HEIGHT
-			) {
+		   || ball_relocate_x>=p2_down_x && ball_relocate_x+I_DIAM<=p2_down_x+PADDLE_DOWN_WIDTH && ball_relocate_y+I_DIAM>=HEIGHT-PADDLE_DOWN_HEIGHT
+		   ) {
 			c_x=(int)(Math.random()*(WIDTH-10))+10;
 			c_y=HEIGHT/2;
+			ball_relocate_y = 0;
 		}
 	}
 	
@@ -225,7 +226,7 @@ public class Pong_Tiffany_Ahn extends JPanel implements KeyListener {
 		g.drawString("P1 Score: "+p1, WIDTH/5, 20);
 		g.drawString("P2 Score: "+p2, WIDTH*3/5, 20);
 		
-		//description of item
+		//description of items
 		g.setColor(Color.gray);
 		g.fillRect(0, 0, I_WIDTH,I_HEIGHT);
 		
@@ -298,7 +299,6 @@ public class Pong_Tiffany_Ahn extends JPanel implements KeyListener {
 		if (e.getKeyChar() == '2') {
 			solo = false;
 		}
-		
 	}
 
 	// defines what we want to happen if a keyboard button
