@@ -30,21 +30,21 @@ public class Pong_Tiffany_Ahn extends JPanel implements KeyListener {
 	
 	// your instance variables here, I've given you a few 
 	private boolean up1, down1, up2, down2,right1,left1,right2,left2; 		// booleans to keep track of paddle movement
-	private boolean solo = false; 											//track of solo play
-	private int paddle_height1 = PADDLE_HEIGHT; 							//player 1's paddle height
-	private int paddle_height2 = PADDLE_HEIGHT;								//player 2's paddle height
-	private int c_x=WIDTH/2, c_y=HEIGHT/2; 									//ball's initial position
-	private int c_xspeed=2 , c_yspeed=3; 									// ball's speed
-	private int p1_y = HEIGHT / 2; 											//initial paddle position
-	private int p2_y = HEIGHT / 2;										    //initial paddle position
-	private int p1 = 0;														//score of player 1
-	private int p2 = 0;														//score of player 2
+	private boolean solo = false; 							//track of solo play
+	private int paddle_height1 = PADDLE_HEIGHT; 					//player 1's paddle height
+	private int paddle_height2 = PADDLE_HEIGHT;					//player 2's paddle height
+	private int c_x=WIDTH/2, c_y=HEIGHT/2; 						//ball's initial position
+	private int c_xspeed=2 , c_yspeed=3; 						// ball's speed
+	private int p1_y = HEIGHT / 2; 							//initial paddle position
+	private int p2_y = HEIGHT / 2;							//initial paddle position
+	private int p1 = 0;								//score of player 1
+	private int p2 = 0;								//score of player 2
 	private int long_x=(int)(Math.random()*WIDTH)+0 , long_y=0;  			// position of long item
 	private int short_x=(int)(Math.random()*WIDTH)+0 , short_y=0; 			// position of short item
-	private int ball_relocate_x=(int)(Math.random()*WIDTH)+0 , ball_relocate_y = 0;  //position of ball relocate item
-	private int p1_down_x = WIDTH/2 - PADDLE_DOWN_WIDTH;					// position of down paddle of player1
-	private int p2_down_x = WIDTH/2;										// position of down paddle of player1
-	private int font = 14;													//font size
+	private int ball_relocate_x=(int)(Math.random()*WIDTH)+0 , ball_relocate_y = 0; //position of ball relocate item
+	private int p1_down_x = WIDTH/2 - PADDLE_DOWN_WIDTH;				// position of down paddle of player1
+	private int p2_down_x = WIDTH/2;						// position of down paddle of player1
+	private int font = 14;								//font size
 	
 	
 	// this method moves the ball at each timestep
