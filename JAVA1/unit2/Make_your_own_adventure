@@ -1,305 +1,417 @@
-// Tiffany Ahn's Adventure Project
-// I got help from Mr.David's Adventure_Better.java
-
 package unit2;
 
-import java.util.Scanner;
+// filler code for pong provided by Mr. David
 
-public class Make_Your_Own_Adventure {
-	private Scanner input = new Scanner(System.in);
-	private String name;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class Pong_Tiffany_Ahn extends JPanel implements KeyListener {
 	
-	//introduction of story
-	public void Introduction() {
-		System.out.println("Hello! What is your name?");
-		String name = input.nextLine();
-		this.name = name;
-		System.out.println("Oh! Hi "+name+" I am Tiffany, nice to meet you!");
-		System.out.println("I think it is your first time to be in a Korean school.");
-		System.out.println("In Korean school, your goal is to get great grades and make many friends.");
-		first_question();
+	// constants that are predefined and won't change as the program runs
+	private final int WIDTH = 600, HEIGHT = 600, WINDOW_HEIGHT = 650, I_WIDTH = 100, I_HEIGHT=50;
+	private final int PADDLE_WIDTH = 20, DIAM = 20, PADDLE_HEIGHT = 100;
+	private final int PADDLE_DOWN_WIDTH = 100, PADDLE_DOWN_HEIGHT = 20;
+	private final int PADDLE_SPEED = 10; 
+	private final int I_DIAM = 13, INTERVAL = 15;
+	
+	// your instance variables here, I've given you a few 
+	private boolean up1, down1, up2, down2,right1,left1,right2,left2; 		// booleans to keep track of paddle movement
+	private boolean solo = false; 											//track of solo play
+	private int paddle_height1 = PADDLE_HEIGHT; 							//player 1's paddle height
+	private int paddle_height2 = PADDLE_HEIGHT;								//player 2's paddle height
+	private int c_x=WIDTH/2, c_y=HEIGHT/2; 									//ball's initial position
+	private int c_xspeed=2 , c_yspeed=3; 									// ball's speed
+	private int p1_y = HEIGHT / 2; 											//initial paddle position
+	private int p2_y = HEIGHT / 2;										    //initial paddle position
+	private int p1 = 0;														//score of player 1
+	private int p2 = 0;														//score of player 2
+	private int long_x=(int)(Math.random()*WIDTH)+0 , long_y=0;  			// position of long item
+	private int short_x=(int)(Math.random()*WIDTH)+0 , short_y=0; 			// position of short item
+	private int ball_relocate_x=(int)(Math.random()*WIDTH)+0 , ball_relocate_y = 0;  //position of ball relocate item
+	private int p1_down_x = WIDTH/2 - PADDLE_DOWN_WIDTH;					// position of down paddle of player1
+	private int p2_down_x = WIDTH/2;										// position of down paddle of player1
+	private int font = 14;													//font size
+	
+	
+	// this method moves the ball at each timestep
+	public void move_ball() {
+		c_x += c_xspeed;
+		c_y += c_yspeed;
 	}
 	
-	//different introduction after game over.
-	public void gameover_Introduction() {
-		System.out.println("Nice to meet you again "+name+"!");
-		System.out.println("It is so sad that you could not be successful at the last school, still, it is okay!!");
-		System.out.println("I will lead you from the first step again.");
-		System.out.println("I hope you can get great grades and make many friends at this time.");
-		first_question();
-	}
-	//method for first question
-	public void first_question() {
-		System.out.println("First, you should wear a school uniform, how do you want to wear it?");
-		first_decision();
-	}
-	
-	//method for receiving first decision from user
-	public void first_decision() {
-		System.out.println("1: wear it formerly.");
-		System.out.println("2: wear it casually.");
-		int answer = input.nextInt();
-		if(answer == 1) {
-			formal();
-		}else if(answer == 2) {
-			casual();
-		}else {
-			wrong_answer("first");
+	// this method moves the paddles at each timestep
+	public void move_paddles() {
+		if (up1) {
+			p1_y = p1_y - PADDLE_SPEED ;
+		}
+		if(down1) {
+			p1_y = p1_y + PADDLE_SPEED ;
+		}
+		if(up2) {
+			p2_y = p2_y - PADDLE_SPEED;
+		}
+		if(down2) {
+			p2_y = p2_y + PADDLE_SPEED;
+		}
+		if(solo) {
+			p2_y = c_y  - PADDLE_HEIGHT/2;
+		}
+		if(right1) {
+			p1_down_x = p1_down_x + PADDLE_SPEED;
+		}
+		if(left1) {
+			p1_down_x = p1_down_x - PADDLE_SPEED;
+		}
+		if(right2) {
+			p2_down_x = p2_down_x + PADDLE_SPEED;
+		}
+		if(left2) {
+			p2_down_x = p2_down_x - PADDLE_SPEED;
 		}
 	}
 	
-	//question for formal cloth
-	public void formal() {
-		System.out.println("Now, you are in school, where do you want to sit?");
-		formal_decision();
+	//this method move item from top to bottom.
+	public void move_item() {
+		long_y = long_y + 1;
+		short_y = short_y + 1;
+		ball_relocate_y = ball_relocate_y + 1;
 	}
 	
-	//method for receiving decision for row from user
-	public void formal_decision() {
-		System.out.println("1: Front row");
-		System.out.println("2: Middle row");
-		int answer = input.nextInt();
-		if(answer == 1) {
-			front_row();
-		}else if(answer == 2 ) {
-			middle_row();
-		}else {
-			wrong_answer("formal");
+	// this method checks if there are any bounces to take care of,
+	// and if the ball has reached a left/right wall it adds to 
+	// the corresponding player's score
+	public void check_collisions() {
+		//bouncing ball
+		if(c_x >= WIDTH-DIAM || c_x <= 0) {
+			c_xspeed = -c_xspeed;
+		}else if(c_y >= WIDTH-DIAM || c_y <= 0) {
+			c_yspeed = -c_yspeed;
+		}
+		
+		//bounce ball by paddle
+		if(c_x<=PADDLE_WIDTH && c_y >= p1_y && c_y<=p1_y+PADDLE_HEIGHT) {
+			c_xspeed = -c_xspeed;
+			c_yspeed = -c_yspeed;
+		}
+		
+		if(c_x>=WIDTH-PADDLE_WIDTH - DIAM && c_y >= p2_y && c_y <=p2_y+PADDLE_HEIGHT) {
+			c_xspeed = -c_xspeed;
+			c_yspeed = -c_yspeed;
+		}
+		
+		//increase point
+		if (c_x <= 0) {
+			p2 ++;
+		}
+		if(c_x >= WIDTH-DIAM) {
+			p1 ++;
+		}
+		
+		//stopping player from going out from the game
+		if(p1_y >= HEIGHT-PADDLE_HEIGHT) {
+			p1_y = HEIGHT-PADDLE_HEIGHT;
+		}
+		if(p2_y >= HEIGHT-PADDLE_HEIGHT) {
+			p2_y = HEIGHT-PADDLE_HEIGHT;
+		}
+		
+		if(p1_y <= 0) {
+			p1_y = 0;
+		}
+		if(p2_y <= 0) {
+			p2_y = 0;
+		}
+		
+		if(p1_down_x <= 0) {
+			p1_down_x = 0;
+		}
+		if(p2_down_x <= 0) {
+			p2_down_x = 0;
+		}
+		
+		if(p1_down_x >= WIDTH-PADDLE_DOWN_WIDTH) {
+			p1_down_x = WIDTH-PADDLE_DOWN_WIDTH;
+		}
+		
+		if(p2_down_x >= WIDTH-PADDLE_DOWN_WIDTH) {
+			p2_down_x = WIDTH-PADDLE_DOWN_WIDTH;
+		}
+		
+		//relocating items from the bottom to top
+		if(short_y>=HEIGHT+I_DIAM) {
+			short_x = (int)(Math.random()*WIDTH)+0;
+			short_y=0;
+		}
+		
+		if(long_y>=HEIGHT+I_DIAM) {
+			long_x = (int)(Math.random()*WIDTH)+0;
+			long_y=0;
+		}
+		
+		if(ball_relocate_y>=HEIGHT+I_DIAM) {
+			ball_relocate_x = (int)(Math.random()*WIDTH)+0;
+			ball_relocate_y=0;
+		}
+			
+	    //effect of "short" item
+		if(short_x>=p1_down_x && short_x+I_DIAM<=p1_down_x+PADDLE_DOWN_WIDTH && short_y+I_DIAM>=HEIGHT-PADDLE_DOWN_HEIGHT) {
+			paddle_height2 -= 1;
+		}
+			
+		if(short_x>=p2_down_x && short_x+I_DIAM<=p2_down_x+PADDLE_DOWN_WIDTH && short_y+I_DIAM>=HEIGHT-PADDLE_DOWN_HEIGHT) {
+			paddle_height1 -= 1;
+		}
+				
+		//effect of "long" item
+		if(long_x>=p1_down_x && long_x+I_DIAM<=p1_down_x+PADDLE_DOWN_WIDTH && long_y+I_DIAM>=HEIGHT-PADDLE_DOWN_HEIGHT) {
+			paddle_height1 += 1;
+		}
+				
+		if(long_x>=p2_down_x && long_x+I_DIAM<=p2_down_x+PADDLE_DOWN_WIDTH && long_y+I_DIAM>=HEIGHT-PADDLE_DOWN_HEIGHT) {
+			paddle_height2 += 1;
+		}
+			
+		//effect of relocating item
+		if(ball_relocate_x>=p1_down_x && ball_relocate_x+I_DIAM<=p1_down_x+PADDLE_DOWN_WIDTH && ball_relocate_y+I_DIAM>=HEIGHT-PADDLE_DOWN_HEIGHT
+			|| ball_relocate_x>=p2_down_x && ball_relocate_x+I_DIAM<=p2_down_x+PADDLE_DOWN_WIDTH && ball_relocate_y+I_DIAM>=HEIGHT-PADDLE_DOWN_HEIGHT
+			) {
+			c_x=(int)(Math.random()*(WIDTH-10))+10;
+			c_y=HEIGHT/2;
 		}
 	}
 	
-	//question for front row
-	public void front_row() {
-		System.out.println("Classmates that think you are model students.");
-		System.out.println("However, due to that, classmates start to copy your assignments.");
-		System.out.println("How do you want to do with it?");
-		front_row_decision();
-	}
 	
-	//method for receiving decision from user
-	public void front_row_decision() {
-		System.out.println("1: tell to a teacher");
-		System.out.println("2: teach homework to classmate, not allowing them to copy it.");
-		int answer = input.nextInt();
-		if(answer == 1) {
-			bullied_telling_teacher();
-		}else if(answer == 2 ) {
-			teach_homework();
-		}else {
-			wrong_answer("front");
-		}
-	}
-	//one possible bad ending
-	public void bullied_telling_teacher() {
-		System.out.println("you got bullied by other children by telling to the teacher.");
-		System.out.println(" You had no choice but to move to other schools.");
-		gameover();
-	}
-	//method for when user decided to teach homework.
-	public void teach_homework() {
-		System.out.println("students think that you are so kind.");
-		System.out.println("You became class president by recommendation of your classmates.");
-		System.out.println("After a few months, the final test come.");
-		System.out.println("Will you study?");
-		teach_homework_decision();
-	}
-	
-	//receiving decision from user about studying in academy
-	public void teach_homework_decision() {
-		System.out.println("1: Yes");
-		System.out.println("2: No");
-		int answer = input.nextInt();
-		if(answer == 1) {
-			study();
-		}else if(answer==2) {
-			no_study();
-		}else {
-			wrong_answer("teach homework");
-		}
-	}
-	
-	//method for when user decided to study
-	public void study() {
-		System.out.println("Even though you study, you could not get a great score.");
-		System.out.println("What do you want to do for the next test?");
-		academy_decision();
-	}
-	
-	//method for when user decided to not study
-	public void no_study() {
-		System.out.println("Definitely you got a bad grade.");
-		System.out.println("So, in the next test, you decided to study.");
-		System.out.println("What do you want to do?");
-		academy_decision();
-	}
-	
-	//decision for how to study
-	public void academy_decision() {
-		System.out.println("1: Attend the private academy");
-		System.out.println("2: Study by yourself");
-		int answer = input.nextInt();
-		if(answer == 1) {
-			academy_ending();
-		}else if(answer==2) {
-			study_alone_ending();
-		}else {
-			wrong_answer("academy");
-		}
-	}
-	
-	//possible good anding
-	public void academy_ending() {
-		System.out.println("In the academy, you studied hard and also made great friends.");
-		System.out.println("You finished your year successfully!");
-		System.out.println("Congratulations!");
-	}
-	
-	//possible bad ending
-	public void study_alone_ending() { 
-		System.out.println("Even though you study by yourself, ");
-		System.out.println("you could not reach the top class. ");
-		System.out.println(" You made lots of friends, but you could not get a good grade.");
-		gameover();
-	}
-	
-	//method for selecting middle row
-	public void middle_row() {
-		System.out.println("Classmates got interested in you and start to ask a lot of questions.");
-		System.out.println("Two groups of students want to spend time with you after school.");
-		System.out.println("Who do you want to play with?");
-		middle_row_decision();
-	}
-	
-	//method for deciding how to deal with friends
-	public void middle_row_decision() {
-		System.out.println("1: Go to karaoke with bullies");
-		System.out.println("2: Play with normal classmates");
-		int answer = input.nextInt();
-		if(answer == 1) {
-			bully_ending();
-		}else if(answer == 2) {
-			play_with_classmates();
-		}else {
-			wrong_answer("middle_row");
-		}
-	}
-	
-	//possible bad ending
-	public void bully_ending() {
-		System.out.println("you became one of the bullies.");
-		System.out.println("You got a bad score in school, and you went to the juvenile center by bullying people.");
-		gameover();
-	}
-	
-	// method for choosing classmate
-	public void play_with_classmates() {
-		System.out.println("you begin to study and play with classmates now.");
-		System.out.println("A few months passed, the final test comes.");
-		System.out.println("Do you want to study?");
-		teach_homework_decision();
-	}
-	
-	//question for casual
-	public void casual() {
-		System.out.println("Now, you are in school, where do you want to sit?");
-		casual_decision();
-	}
-	
-	//method for receiving decision for row from user
-	public void casual_decision() {
-		System.out.println("1: Middle row");
-		System.out.println("2: Back row");
-		int answer = input.nextInt();
-		if(answer == 1) {
-			middle_row();
-		}else if(answer == 2 ) {
-			back_row();
-		}else {
-			wrong_answer("casual");
-		}
-	}
-	
-	//method for choosing back row
-	public void back_row() {
-		System.out.println("Bullies think you are interesting.");
-		System.out.println("They come to you and start to talk to you.");
-		System.out.println("They want you to go to karaoke with them.");
-		System.out.println("Do you want to go?");
-		back_row_decision();
+	// defines what we want to happen anytime we draw the game
+	// you simply need to fill in a few parameters here
+	public void paint(Graphics g) {
+		
+		// background color is gray
+		g.setColor(Color.white);
+		g.fillRect(0, 0, WIDTH, HEIGHT);
+		
+		// draw your rectangles and circles here
+		// circle
+		g.setColor(new Color(232,128,177));
+		g.fillOval(c_x,c_y, DIAM, DIAM);
+		
+		//paddle
+		g.setColor(new Color(255,175,152));
+		g.fillRect(0, p1_y, PADDLE_WIDTH, paddle_height1);
+		g.setColor(new Color(229,186,255));
+		g.fillRect(WIDTH-PADDLE_WIDTH, p2_y, PADDLE_WIDTH, paddle_height2);
+		g.setColor(new Color(255,175,152));
+		g.fillRect(p1_down_x,HEIGHT-PADDLE_DOWN_HEIGHT, PADDLE_DOWN_WIDTH, PADDLE_DOWN_HEIGHT);
+		g.setColor(new Color(229,186,255));
+		g.fillRect(p2_down_x,HEIGHT-PADDLE_DOWN_HEIGHT, PADDLE_DOWN_WIDTH, PADDLE_DOWN_HEIGHT);
+		
+		// writes the score of the game - you just need to fill the scores in
+		Font f = new Font("Arial", Font.BOLD, font);
+		g.setFont(f);
+		g.setColor(Color.red);
+		g.drawString("P1 Score: "+p1, WIDTH/5, 20);
+		g.drawString("P2 Score: "+p2, WIDTH*3/5, 20);
+		
+		//description of item
+		g.setColor(Color.gray);
+		g.fillRect(0, 0, I_WIDTH,I_HEIGHT);
+		
+		g.setColor(Color.green);
+		g.drawString("long",INTERVAL+I_DIAM,INTERVAL);
+		g.fillOval(0,0, I_DIAM, I_DIAM);
+		
+		g.setColor(Color.blue);
+		g.drawString("short",INTERVAL+I_DIAM,INTERVAL * 2);
+		g.fillOval(0,INTERVAL, I_DIAM, I_DIAM);
+		
+		g.setColor(Color.orange);
+		g.drawString("ball reset",INTERVAL+I_DIAM,INTERVAL * 3);
+		g.fillOval(0,INTERVAL*2, I_DIAM, I_DIAM);
+		
+		
+		//item "long"
+		g.setColor(Color.green);
+		g.fillOval(long_x,long_y, I_DIAM, I_DIAM);
+		
+		//item "short"
+		g.setColor(Color.blue);
+		g.fillOval(short_x,short_y, I_DIAM, I_DIAM);
+		
+		//item "ball_relocate"
+		g.setColor(Color.orange);
+		g.fillOval(ball_relocate_x,ball_relocate_y, I_DIAM, I_DIAM);
+		
+		
 		
 	}
-	
-	//decision method for back_row
-	public void back_row_decision() {
-		System.out.println("1: Yes");
-		System.out.println("2: No");
-		int answer = input.nextInt();
-		if(answer == 1) {
-			bully_ending();
-		}else if(answer == 2 ) {
-			bullied_ending();
-		}else {
-			wrong_answer("back row");
-		}
-	}
-	
-	//possible bad ending
-	public void bullied_ending() {
-		System.out.println("You got bullied by other children by ignoring them.");
-		System.out.println("You had no choice but to move to other schools.");
-		gameover();
-	}
-	//method for game over and restart
-	public void gameover() {
-		System.out.println("");
-		System.out.println("I am so sad that you could not reach your goal,"+name);
-		gameover_decision();
-	}
+
+	// defines what we want to happen if a keyboard button has 
+	// been pressed - you need to complete this
+	public void keyPressed(KeyEvent e) {
 		
-	//decision for continuing the game or not
-	public void gameover_decision() {
-		System.out.println("Do you want to start again? (y/n)");
-		String answer = input.next();
-		if(answer.equals("y") || answer.equals("Y")) {
-			gameover_Introduction();
-		}else if(answer.equals("n") || answer.equals("N")) {
-			System.out.println("-------------GAME OVER------------");
-		}else {
-			wrong_answer("gameover");
+		int keyCode = e.getKeyCode();
+		
+		// changes paddle direction based on what button is pressed
+		if (keyCode == KeyEvent.VK_DOWN) 
+			down2=true;
+		
+		if (keyCode == KeyEvent.VK_UP) 
+			up2 = true;
+		
+		if(keyCode==KeyEvent.VK_RIGHT)
+			right2 = true;
+		
+		if(keyCode==KeyEvent.VK_LEFT)
+			left2 = true;
+		
+		if (e.getKeyChar() == 'w')
+			up1 = true;
+		
+		if (e.getKeyChar() =='s')
+			down1 = true;
+		
+		if (e.getKeyChar() == 'a')
+			left1 = true;
+		
+		if (e.getKeyChar() =='d')
+			right1 = true;
+			
+		// turn 1-player mode on
+		if (e.getKeyChar() == '1') {
+			solo = true ;
+		}
+			
+		// turn 2-player mode on
+		if (e.getKeyChar() == '2') {
+			solo = false;
+		}
+		
+	}
+
+	// defines what we want to happen if a keyboard button
+	// has been released - you need to complete this
+	public void keyReleased(KeyEvent e) {
+		
+		int keyCode = e.getKeyCode();
+		
+		// stops paddle motion based on which button is released
+		if (keyCode == KeyEvent.VK_UP) 
+			up2 = false;
+
+		if (keyCode == KeyEvent.VK_DOWN) 
+			down2 = false;
+  
+		if(e.getKeyChar() == 'w')
+			up1 = false;
+		
+		if (e.getKeyChar() == 's') {
+			down1 = false;
+		}
+		if(keyCode==KeyEvent.VK_RIGHT)
+			right2 = false;
+		
+		if(keyCode==KeyEvent.VK_LEFT)
+			left2 = false;
+		
+		if (e.getKeyChar() == 'a')
+			left1 = false;
+		
+		if (e.getKeyChar() =='d')
+			right1 = false;
+			
+	}
+	
+	
+	
+	// restarts the game, including scores
+	public void restart() {
+		c_x=WIDTH/2;
+		c_y=HEIGHT/2;
+		c_xspeed=3;
+		c_yspeed=2;
+		p1_y = HEIGHT / 2;
+		p2_y = HEIGHT / 2;
+		p1 = 0;		//score of player 1
+		p2 = 0;		//score of player 2
+		paddle_height1 = PADDLE_HEIGHT; //resetting paddle height
+		paddle_height2 = PADDLE_HEIGHT;
+	}
+	
+
+	//////////////////////////////////////
+	//////////////////////////////////////
+	
+	// DON'T TOUCH THE BELOW CODE
+	
+	
+	// this method runs the actual game.
+	public void run() {
+		
+		// while(true) should rarely be used to avoid infinite loops, but here it is ok because
+		// closing the graphics window will end the program
+		while (true) {
+	
+			// draws the game
+			repaint();
+			
+			// we move the ball, paddle, and check for collisions
+			// every hundredth of a second
+			move_paddles();
+			move_ball();
+			move_item();
+			check_collisions();
+			
+			
+			//rests for a hundredth of a second
+			try {
+				Thread.sleep(10);
+			} catch (Exception ex) {}
 		}
 	}
 	
-	//method for wrong answers
-	public void wrong_answer(String question) {
-		System.out.println("What " + name + " ? Could you tell it again?");
-		if (question.equals( "first")) {
-			first_decision();
-		}else if (question.equals("formal")) {
-			formal_decision();
-		}else if(question.equals("front")) {
-			front_row_decision();
-		}else if(question.equals("gameover")) {
-			gameover_decision();
-		}else if(question.equals("teach homework")){
-			teach_homework_decision();
-		}else if(question.equals("academy")){
-			academy_decision();
-		}else if(question.equals("middle_row")) {
-			middle_row_decision();
-		}else if(question.equals("casual")) {
-			casual_decision();
-		}else if(question.equals("back row")) {
-			back_row_decision();
-		}else {
-			System.out.println("error");
-		}
-	}
-	
-	//main method
+	// very simple main method to get the game going
 	public static void main(String[] args) {
-		Make_Your_Own_Adventure start = new Make_Your_Own_Adventure();
-		start.Introduction();
+		new Pong_Tiffany_Ahn();
 	}
+ 
+	// does complicated stuff to initialize the graphics and key listeners
+	// DO NOT CHANGE THIS CODE UNLESS YOU ARE EXPERIENCED WITH JAVA
+	// GRAPHICS!
+	public Pong_Tiffany_Ahn() {
+		JFrame frame = new JFrame();
+		JButton button = new JButton("restart");
+		frame.setSize(WIDTH, WINDOW_HEIGHT);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.add(this);
+		frame.add(button, BorderLayout.SOUTH);
+		frame.setLocationRelativeTo(null);
+		frame.setResizable(false);
+		frame.setVisible(true);
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				restart();
+				Pong_Tiffany_Ahn.this.requestFocus();
+			}
+		});
+		this.addKeyListener(this);
+		this.setFocusable(true);
+		
+		run();
+	}
+	
+	// method does nothing
+	public void keyTyped(KeyEvent e) {}
 }
-
-
