@@ -1,0 +1,84 @@
+package unit3;
+
+import java.util.Scanner;
+
+public class For_loops {
+	private Scanner input = new Scanner(System.in);
+	
+  //easy1
+	public void alphabet() {
+		for(char i=65; i<=90; i++) {
+			System.out.print(i+" ");
+		}
+		System.out.println();
+	}
+	
+  //hard1
+	public void muliplication() {
+		for(int i=1; i<=12; i++) {
+			for(int m=1; m<=12; m++) {
+				System.out.print(i*m + "  ");
+			}
+			System.out.println();
+		}
+	}
+	
+  //easy2
+	public void sum() {
+		System.out.println("type number:");
+		int x = input.nextInt();
+		int sum = 0;
+		for(int i=1;i<=x;i++) {
+			sum = sum + i;
+		}
+		System.out.println(sum);
+	}
+	
+	//hard2
+	public void prime() {
+		System.out.println("type number:");
+		int x = input.nextInt();
+		for(int num=1; num<=x; num++) {
+			isPrime(num);
+		}
+	}
+	
+	public void isPrime(int num) {
+		boolean isPrime = true;
+		for(int i=2;i<num;i++) {
+			if(num % i == 0) {
+				isPrime = false;
+			}
+		}
+		if(isPrime) {
+			System.out.print(num+" ");
+		}
+	}
+	
+  //hard4
+	public void X_of_stars(){
+		System.out.println("type number:");
+		int x = input.nextInt();
+		String s_str;
+		for (int i=1;i<=x;i++){
+			s_str="";
+				for(int j=1;j<=x;j++) {
+					if(j==i || j==x-i+1) {
+						s_str=s_str+"*";
+					}else {
+						s_str=s_str+" ";
+					}
+				}
+			System.out.println(s_str);
+		}
+	}
+	
+	public static void main(String[] args) {
+		For_loops runner=  new For_loops();
+		runner.alphabet();
+		runner.muliplication();
+		runner.sum();
+		runner.prime();
+		runner.X_of_stars();
+	}
+}
