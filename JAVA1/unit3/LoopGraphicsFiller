@@ -1,0 +1,139 @@
+package unit3;
+
+// filler code for pong provided by Mr. David
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class LoopGraphicsFiller extends JPanel {
+	
+	// constants that are predefined and won't change as the program runs
+	private final int WIDTH = 600, HEIGHT = 600;
+
+	public void circles(Graphics g) {
+		g.setColor(Color.RED);
+		for(int i=0;i<WIDTH/30;i++) {
+			g.fillOval(i*30, HEIGHT/2 , 30, 30);
+		}
+	}
+	public void changeColor(Graphics g) {
+		int R=0;
+		int G=0;
+		int B=0;
+		for(int i=0; i<WIDTH ; i++) {
+			g.setColor(new Color(R%255,G%255,B%255));
+			g.fillRect(i*20, HEIGHT/2, 20, 20);
+			R += 50;
+			G += 40;
+			B += 30;
+		}
+	}
+	
+	public void circles_2(Graphics g) {
+		g.setColor(Color.PINK);
+		for(int i=0; i<10; i++) {
+			for(int j=0; j<10 ; j++)
+				g.fillOval(i*20,j*20, 20, 20);
+			}
+		}
+	
+	//I tried my own thing. I got help from stack overflow.
+	public void string_art(Graphics g) {
+		g.setColor(Color.CYAN);
+		
+		for(int x=0; x<HEIGHT; x++) {
+			g.drawLine(x*10,0,WIDTH,x*10);
+		}
+		for(int x = 0 ; x< WIDTH ; x ++){
+			   g.drawLine(x*10, 0, 0, WIDTH - x*10);
+		} 
+		for(int x=HEIGHT; x>0; x--) {
+			g.drawLine(0,x*10,x*10,WIDTH);
+		}
+		for(int x = WIDTH ; x>0 ; x --){
+			   g.drawLine(WIDTH, x*10, WIDTH - x*10,HEIGHT );
+		} 
+		
+	}
+	
+	public void checkerboard(Graphics g) {
+		g.setColor(Color.BLUE);
+		for(int i=0; i<WIDTH; i++) {
+			g.drawLine(i*50,0, i*50,HEIGHT);
+		}
+		for(int i=0; i<HEIGHT; i++) {
+			g.drawLine(0,i*50, WIDTH,i*50);
+		}
+	}
+	
+	// defines what we want to happen anytime we draw the graphics
+	public void paint(Graphics g) {
+		
+		// background color is gray
+		g.setColor(Color.LIGHT_GRAY);
+		g.fillRect(0, 0, WIDTH, HEIGHT);
+		
+		// call your methods here
+		circles(g);
+		checkerboard(g);
+		changeColor(g);
+		string_art(g);
+		circles_2(g);
+		
+	}
+
+	//////////////////////////////////////
+	//////////////////////////////////////
+	
+	// DON'T TOUCH THE BELOW CODE
+	
+	
+	// this method runs the actual program.
+	public void run() {
+
+		// while(true) should rarely be used to avoid infinite loops, but here it is ok because
+		// closing the graphics window will end the program
+		while (true) {
+	
+			// draws
+			//repaint();
+			
+			//rests for a hundredth of a second
+			try {
+				Thread.sleep(10);
+			} catch (Exception ex) {}
+		}
+	}
+	
+	// very simple main method to get the game going
+	public static void main(String[] args) {
+		new LoopGraphicsFiller();
+	}
+ 
+	// does complicated stuff to initialize the graphics and key listeners
+	// DO NOT CHANGE THIS CODE UNLESS YOU ARE EXPERIENCED WITH JAVA
+	// GRAPHICS!
+	public LoopGraphicsFiller() {
+		JFrame frame = new JFrame();
+		frame.setSize(WIDTH, HEIGHT);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.add(this);
+		frame.setLocationRelativeTo(null);
+		frame.setResizable(false);
+		frame.setVisible(true);
+		this.setFocusable(true);
+		
+		run();
+	}
+}
