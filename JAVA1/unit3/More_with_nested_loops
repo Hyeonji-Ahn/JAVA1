@@ -1,0 +1,77 @@
+package unit3;
+
+import java.util.Scanner;
+
+public class More_with_nested_loops {
+	
+	private Scanner input = new Scanner(System.in);
+	
+	public void reapeating_number() {
+		System.out.println("type number:");
+		int x = input.nextInt();
+		for(int i=1; i<=x; i++) {
+			for (int j=i;j<x+i;j++) {
+				System.out.print( j == x ? x : j%x );
+			}
+			System.out.println();
+		}
+	}
+	
+	public void X_triangle() {
+		System.out.println("type number:");
+		int x = input.nextInt();
+		for(int i=1;i<=x;i++) {
+			for(int j=0;j<i;j++) {
+				System.out.print("X");
+			}
+			System.out.println();
+		}
+	}
+	
+	public void stars() {
+		System.out.println("type number:");
+		int h = input.nextInt();
+		int w= -1;
+		int n=0;
+		for(int i=0;i<h;i++) {
+			w = w+2;
+		}
+		
+		for(int i=0;i<h;i++) {
+			for(int j=0;j<=w;j++) {
+				if(j>=w/2-n && j<=w/2+n) {
+					System.out.print("*");
+				}else {
+					System.out.print(" ");
+				}
+			}
+		n=n+1;
+		System.out.println();
+		}
+		
+		n=0;
+		w=-1;
+		for(int i=0;i<h-1;i++) {
+			w = w+2;
+		}
+		for(int i=h;i<2*h;i++) {
+			System.out.print(" ");
+			for(int j=0;j<w;j++) {
+				if(j>=n&&j<w-n) {
+					System.out.print("*");
+				}else {
+					System.out.print(" ");
+				}
+			}
+			n=n+1;
+			System.out.println();
+		}
+	}
+	
+	public static void main(String[] args) {
+		More_with_nested_loops runner=  new More_with_nested_loops();
+		runner.reapeating_number();
+		runner.X_triangle();
+		runner.stars();
+	}
+}
