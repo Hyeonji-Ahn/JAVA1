@@ -1,0 +1,95 @@
+package unit4;
+import java.awt.Color;
+import java.awt.Graphics;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class FallingBlocksFiller extends JPanel {
+	
+	private int WIDTH = 800, HEIGHT = 600, NUMBLOCKS = 40;
+	private int SQUARE = 20, MAXSPEED = 20, MINSPEED = 5;
+
+	// instance variables (what kind of data structure should we use?)
+	private int[] y = new int[NUMBLOCKS];
+	private int[] colorR = new int[NUMBLOCKS];
+	private int[] colorB = new int[NUMBLOCKS];
+	private int[] colorG = new int[NUMBLOCKS];
+	private int[] x = new int[NUMBLOCKS];
+	private int[] speed = new int[NUMBLOCKS];
+	
+	
+	// fills in your arrays with random x and y values
+	public void initializeArrays() {
+		for(int i=0; i < colorR.length; i++) {
+			colorR[i] = (int) (Math.random()*255);
+			colorB[i] = (int) (Math.random()*255);
+			colorG[i] = (int) (Math.random()*255);
+		}
+		for(int i=0; i< speed.length; i++) {
+			speed[i] = (int) (Math.random()*(MAXSPEED - MINSPEED)+MINSPEED);
+		}
+		for(int i=0; i<x.length; i++) {
+			x[i] = (int) (Math.random()*WIDTH);
+		}
+	}
+	
+	// change your arrays here to make the blocks move
+	public void moveblocks() {
+		for(int i = 0; i<y.length; i++) {
+			y[i] += speed[i];
+			if(y[i] >= HEIGHT) {
+				y[i] = 0;
+				x[i] = (int) (Math.random()*WIDTH);
+				colorR[i] = (int) (Math.random()*255);
+				colorB[i] = (int) (Math.random()*255);
+				colorG[i] = (int) (Math.random()*255);
+				speed[i] = (int) (Math.random()*(MAXSPEED - MINSPEED)+MINSPEED);
+			}
+		}
+	}
+	
+	// change the last part of this method!
+	public void paint(Graphics g) {
+		// give a white background
+		g.setColor(Color.white);
+		g.fillRect(0, 0, WIDTH, HEIGHT);
+		
+		// draw your rectangles here! 
+		for(int i=0; i<NUMBLOCKS ; i++) {
+			g.setColor(new Color(colorR[i],colorB[i],colorG[i]));
+			g.fillRect(x[i], y[i], SQUARE, SQUARE);
+		}
+		
+	}
+	
+	// ******** DON'T TOUCH BELOW CODE ***************
+	
+	// don't touch this method!
+	public FallingBlocksFiller() {
+		initializeArrays();
+		JFrame frame = new JFrame();
+		frame.setSize(WIDTH, HEIGHT);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.add(this);
+		frame.setVisible(true);
+
+		while (true) {
+			moveblocks();
+			repaint();
+			try {
+				Thread.sleep(20);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
+			WIDTH = frame.getSize().width;
+			HEIGHT = frame.getSize().height;
+		}
+	}
+
+	// don't touch this method!
+	public static void main(String[] args) {
+		new FallingBlocksFiller();
+	}
+
+}
