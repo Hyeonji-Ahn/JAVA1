@@ -1,0 +1,57 @@
+package unit4;
+
+import java.util.Scanner;
+
+public class Starting_with_Arrays {
+	private Scanner input = new Scanner(System.in);
+	
+	public void display (int[] arr) {
+		for(int i=0;i<arr.length;i++) {
+			System.out.print(arr[i]+" ");
+		}
+	}
+	
+	public void oneToN (int n) {
+		int[]arr = new int[n];
+		for(int i=0; i<n; i++) {
+			arr[i] = i+1;
+		}
+		display(arr);
+	}
+	
+	public void swap (int[] arr) {
+		int temp = arr[0];
+		arr[0] = arr[arr.length-1];
+		arr[arr.length-1] = temp;
+		display(arr);
+	}
+	
+	public void userArray() {
+		int[] arr = new int[7];
+		for(int i=0; i<7; i++) {
+			System.out.println("type number:");
+			arr[i] = input.nextInt();
+		}
+		display(arr);
+	}
+	
+	public void reverse(int[] arr) {
+		for(int i=0;  i<arr.length/2; i++) {
+			int temp = arr[i];
+			arr[i] = arr[arr.length-i-1];
+			arr[arr.length-i-1] = temp;
+		}
+		display(arr);
+	}
+	
+	public static void main(String[] args) {
+		Starting_with_Arrays runner=  new Starting_with_Arrays();
+		int[] myArr = {1,2,3,4,5};
+		runner.oneToN(5);
+		runner.swap(myArr);
+		runner.userArray();
+		runner.reverse(myArr);
+	}
+	
+
+}
