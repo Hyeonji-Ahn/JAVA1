@@ -14,21 +14,23 @@ public class RemixerFiller {
 	private String fileName = "Lemon";	// this should match your txt file
 	
 //	private String[] wordsToReplace;	// for part 2, if you finish the main project
-	private String[] wordsToReplace = { "cannot", "be", "erased", "from","me"};
+	private String[] wordsToReplace = { "lemon", "day", "remains"};
 //	private String[] newWords;
+	private String [] newWords = {"strawberry","night"};
+	private String[] moreNewWords = { "cannot", "be", "erased", "from","me"};
 	
 	public void remix() {
 		
 		for(int i=0; i<lyrics.length; i++) {
-			if(lyrics[i].equals("lemon")) {
-				lyrics[i] = "strawberry";
+			if(lyrics[i].equals(wordsToReplace[0])) {
+				lyrics[i] = newWords[0];
 			}
-			if(lyrics[i].equals("day")) {
-				lyrics[i] = "night";
+			if(lyrics[i].equals(wordsToReplace[1])) {
+				lyrics[i] = newWords[1];
 			}
-			if(lyrics[i].equals("remains")) {
-				for(int j=0; j<wordsToReplace.length; j++) {
-					lyrics[i+j]=wordsToReplace[j];
+			if(lyrics[i].equals(wordsToReplace[2])) {
+				for(int j=0; j<moreNewWords.length; j++) {
+					lyrics[i+j]=moreNewWords[j];
 				}
 			}
 		}
