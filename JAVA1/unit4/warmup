@@ -1,0 +1,55 @@
+package unit4;
+
+import java.util.Arrays;
+
+public class Warmup {
+	public void weightedsum (double nums[]) {
+		double sum =0;
+		for(int i=0; i<nums.length; i++) {
+			sum += nums[i]*i;
+		}
+		System.out.println(sum);
+	}
+	
+	public void onlylowercase(char chars[]) {
+		String a = "";
+		for(int i=0; i<chars.length; i++) {
+			if(Character.isLowerCase(chars[i])) {
+				a += chars[i];
+			}
+		}
+		System.out.println(a);
+	}
+	
+	public void appearsmost(char chars[]) {
+		Arrays.sort(chars);
+		
+		int maxcount = 1;
+		int count =1;
+		char mostfreq = chars[0];
+				
+		for(int i=1; i<chars.length; i++){
+			if(chars[i] == chars[i-1]) {
+				count++;
+			}else {
+				if(count > maxcount) {
+					mostfreq = chars[i-1];
+					maxcount = count;
+				}
+				count=1;
+			}
+		}
+		
+		System.out.println(mostfreq);
+		
+	}
+	
+public static void main(String[] args) {
+		Warmup run = new Warmup();
+		double arr[]= {5.8,3.1,2.5};
+		char chars[] = {'h', 'i', '!','H','h','a','a','a'};
+		run.weightedsum(arr);
+		run.onlylowercase(chars);
+		run.appearsmost(chars);
+	}
+}
