@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 
 import unit2.Pong_Tiffany_Ahn;
 
-public class AngryBirdsFiller extends JPanel {
+public class AngryBirdsFiller2 extends JPanel {
 	
 	// the width/height of the window - feel free to change these
 	private final int W_WIDTH = 900, W_HEIGHT = 600;
@@ -42,9 +42,10 @@ public class AngryBirdsFiller extends JPanel {
 	//whether the enemy is dead or not
 	private boolean[] dead = new boolean[NUM_ENEMIES];
 	
+	//whether the gravity is applied to the ball
 	private boolean isGravityOn = false;
 	
-	//images
+	//variables for images
 	private Image ballon6;
 	private Image back1;
 	private Image back2;
@@ -85,7 +86,7 @@ public class AngryBirdsFiller extends JPanel {
 	 
 	 //Visibility of background
 	 private boolean[] background = {false,true,false,false,false};
-	 //add false to both arrays so that it is easier to match the stage and value in array
+	 //add false to the 0th index of both arrays so that it is easier to match the stage and value in array
 	 //ex) stage 1 = stages[1] , background[1]
 	 
 	 //current stage
@@ -123,11 +124,7 @@ public class AngryBirdsFiller extends JPanel {
 		for(int i=0; i<dead.length; i++) {
 			dead[i]= false;
 		}
-		
-		
 	}
-
-
 	
 	// move your 'bird' and apply any gravitational pull 
 	public void moveBird() {
@@ -145,10 +142,10 @@ public class AngryBirdsFiller extends JPanel {
 		
 		//check whether the ball is out of the window
 		if(ballx>=W_WIDTH || bally>=W_HEIGHT || ballx<=-BALLDIAM || bally<=-BALLDIAM) {
-			ballx = (double)slingshotx+20;
+			ballx = (double)slingshotx+20; //reset the location of ball
 			bally =(double)slingshoty;
-			isGravityOn = false;
-			speedX = 0;
+			isGravityOn = false; // turn off the gravity
+			speedX = 0; //reset the speed
 			speedY = 0;
 		}
 		
@@ -156,18 +153,18 @@ public class AngryBirdsFiller extends JPanel {
 		for(int i = 0; i < enemyX.length; i++) {
 			if(!dead[i]) {
 				if(distance(ballx,bally,enemyX[i], enemyY[i]) <= ENEMYDIAM/2 + BALLDIAM/2) {
-				dead[i] = true;
-				score ++;
+				dead[i] = true; //make enemy to disappear
+				score ++; //increase the score
 				}
 			}
 		}
 		
 		//check whether the balloons are out of the window
 		for(int i = 0; i < enemyY.length; i++) {
-			if( enemyY[i]>=W_HEIGHT-ENEMYDIAM*2 || enemyY[i]<=0) {
+			if( enemyY[i]>=W_HEIGHT-ENEMYDIAM*2 || enemyY[i]<=0) { // check Y value
 				ballonSpeedY[i] = -ballonSpeedY[i];
 			}
-			if(enemyX[i]>=W_WIDTH-ENEMYDIAM || enemyX[i]<=0) {
+			if(enemyX[i]>=W_WIDTH-ENEMYDIAM || enemyX[i]<=0) {  //check X value
 				ballonSpeedX[i] = -ballonSpeedX[i];
 				
 			}
@@ -272,7 +269,7 @@ public class AngryBirdsFiller extends JPanel {
 	// draws everything in our project - the enemies, your 'bird', 
 	// and anything else that is present in the game
 	public void paint(Graphics g) {
-		// draws a background
+		// draws a background depends on stage
 		if(background[1] ==true) {
 		g.drawImage(back1, 0,0, W_WIDTH, W_HEIGHT, null);
 		}
@@ -332,7 +329,7 @@ public class AngryBirdsFiller extends JPanel {
 		}
 	}
 	
-	public AngryBirdsFiller() {
+	public AngryBirdsFiller2() {
 		setup();
 		
 		JFrame frame = new JFrame();
@@ -340,10 +337,10 @@ public class AngryBirdsFiller extends JPanel {
 		this.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {}
 			public void mousePressed(MouseEvent e) {
-				AngryBirdsFiller.this.mousePressed(e.getX(),e.getY());	
+				AngryBirdsFiller2.this.mousePressed(e.getX(),e.getY());	
 			}
 			public void mouseReleased(MouseEvent e) {
-				AngryBirdsFiller.this.mouseReleased(e.getX(),e.getY());
+				AngryBirdsFiller2.this.mouseReleased(e.getX(),e.getY());
 			}
 			public void mouseEntered(MouseEvent e) {}
 			public void mouseExited(MouseEvent e) {}
@@ -355,6 +352,6 @@ public class AngryBirdsFiller extends JPanel {
 		run();
 	}
 	public static void main(String[] args) {
-		new AngryBirdsFiller();
+		new AngryBirdsFiller2();
 	}
 }
