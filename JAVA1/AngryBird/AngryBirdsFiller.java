@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 
 import unit2.Pong_Tiffany_Ahn;
 
-public class AngryBirdsFiller2 extends JPanel {
+public class AngryBirdsFiller extends JPanel {
 	
 	// the width/height of the window - feel free to change these
 	private final int W_WIDTH = 900, W_HEIGHT = 600;
