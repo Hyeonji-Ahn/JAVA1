@@ -1,0 +1,48 @@
+package unit5;
+
+public class IntroToStringsHW {
+	
+	public void secondHalf(String str) {
+		System.out.println( str.substring(str.length()/2));
+	}
+	
+	public void Concatenate(String str1, String str2) {
+		System.out.println(str1.substring(1) + str2.substring(1));
+	}
+	
+	public void backward(String str) {
+		for(int i=0; i<str.length(); i++) {
+			System.out.print(str.charAt(str.length()-i-1));
+		}
+		System.out.println();
+	}
+	
+	public void contains(String bigWord, String littleWord) {
+		
+		if(bigWord.indexOf(littleWord) != -1) {
+			System.out.println("yes");
+		}else {
+			System.out.println("no");
+		}
+	}
+	public void jumble(String str) {
+		for(int i=0; i<str.length(); i++) {
+			for(int j=0; j<str.length(); j++) {
+				System.out.print(str.charAt((j+i)%5));
+			}
+			System.out.println();
+		}
+	}
+	
+	public static void main(String[] args) {
+		IntroToStringsHW runner = new IntroToStringsHW();
+		String str = "hi there";
+		String str2 = "hello";
+		String str3 = "hello I am Tiffany";
+		runner.secondHalf(str);
+		runner.Concatenate(str, str2);
+		runner.backward(str2);
+		runner.contains(str3,str2);
+		runner.jumble(str2);
+	}
+}
