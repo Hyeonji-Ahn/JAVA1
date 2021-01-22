@@ -168,6 +168,7 @@ public class AngryBirdsFiller2 extends JPanel {
 		//check whether the balloons are out of the window
 		for(int i = 0; i < enemyY.length; i++) {
 			if( enemyY[i]>=slingshoty-ENEMYDIAM*3 || enemyY[i]<=0) { // check Y value
+				//y value should not over slingshoty-ENEMYDIAM*3 because of the 3rd round.
 				ballonSpeedY[i] = -ballonSpeedY[i];
 			}
 			if(enemyX[i]>=W_WIDTH-ENEMYDIAM || enemyX[i]<=0) {  //check X value
