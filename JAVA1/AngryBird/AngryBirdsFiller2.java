@@ -1,5 +1,6 @@
 package unit4;
 // Angry Birds template provided by Mr. David
+// stopwatch system from https://gist.github.com/EdHurtig/78cbe307c1c85db12af7
 //images from Animal Crossing
 
 import java.awt.Color;
@@ -20,7 +21,7 @@ import javax.swing.JPanel;
 
 import unit2.Pong_Tiffany_Ahn;
 
-public class AngryBirdsFiller extends JPanel {
+public class AngryBirdsFiller2 extends JPanel {
 	
 	// the width/height of the window - feel free to change these
 	private final int W_WIDTH = 900, W_HEIGHT = 600;
@@ -75,7 +76,7 @@ public class AngryBirdsFiller extends JPanel {
 	 
 	 //maximum and minimum location of the balloons
 	 private double ballonMaxX = W_WIDTH - ENEMYDIAM;
-	 private double ballonMaxY = W_HEIGHT-ENEMYDIAM*3-100;
+	 private double ballonMaxY = slingshoty-ENEMYDIAM*3;
 	 private double ballonMinX = slingshotx + 100; //100 for more spaces between sling shot and balloons
 	 private double ballonMinY = 0;
 	 
@@ -96,6 +97,7 @@ public class AngryBirdsFiller extends JPanel {
 	 private int[] ballonSpeedY = new int[NUM_ENEMIES];
 	 private int[] ballonSpeedX = new int[NUM_ENEMIES];
 	 
+	 private int used_balls = 0;
 	
 	// this method is for setting up any arrays that need filling in and loading images. 
 	// This method will run once at the start of the game.
@@ -124,6 +126,9 @@ public class AngryBirdsFiller extends JPanel {
 		for(int i=0; i<dead.length; i++) {
 			dead[i]= false;
 		}
+		
+		//start the stopwatch
+		start();
 	}
 	
 	// move your 'bird' and apply any gravitational pull 
@@ -147,6 +152,7 @@ public class AngryBirdsFiller extends JPanel {
 			isGravityOn = false; // turn off the gravity
 			speedX = 0; //reset the speed
 			speedY = 0;
+			used_balls ++; //increase the number of used ball
 		}
 		
 		//check collision between enemy and the ball
@@ -161,7 +167,7 @@ public class AngryBirdsFiller extends JPanel {
 		
 		//check whether the balloons are out of the window
 		for(int i = 0; i < enemyY.length; i++) {
-			if( enemyY[i]>=W_HEIGHT-ENEMYDIAM*2 || enemyY[i]<=0) { // check Y value
+			if( enemyY[i]>=slingshoty-ENEMYDIAM*3 || enemyY[i]<=0) { // check Y value
 				ballonSpeedY[i] = -ballonSpeedY[i];
 			}
 			if(enemyX[i]>=W_WIDTH-ENEMYDIAM || enemyX[i]<=0) {  //check X value
@@ -236,6 +242,8 @@ public class AngryBirdsFiller extends JPanel {
 			stages[4] = true;
 			background[3]=false; //change the back ground
 			background[4] = true;
+			stop();
+			
 			
 		}
 	
@@ -306,13 +314,74 @@ public class AngryBirdsFiller extends JPanel {
 		//write the stage of the game
 		g.drawString("STAGE " +stage, W_WIDTH-150, 50);
 		
+		
 		//end statement
 		if(stages[4]) {
-			g.drawString("Thank you for playing!", W_WIDTH/2-175, W_HEIGHT/2-150);
+			g.drawString("Thank you for playing!", W_WIDTH/2-175, W_HEIGHT/2-200);
+			g.drawString(toString(), W_WIDTH/2-175, W_HEIGHT/2-150); //draw a time
+			g.drawString("used balls: " + used_balls, W_WIDTH/2-130, W_HEIGHT/2-100); //write a used ball 
+		}else {
+			g.drawString("BALLS: " + used_balls, W_WIDTH-350, 50); //write a used ball
 		}
 		
 		
+		
 	}
+	
+	    //Whether the stopwatch is running
+	    private boolean running;
+	   
+	    //The start time in microseconds
+	    private long start;
+
+	    //The end time
+	    private long end;
+
+	    // Default Constructor
+	    public void Stopwatch() {
+	        this.start = 0;
+	        this.end = 0;
+	    }
+
+	    // Determines if the Stopwatch is running (could be paused)
+	    public boolean isRunning() {
+	        return running;
+	    }
+
+	   
+
+	    //Starts the Stopwatch
+	    public void start() {
+	        start = System.nanoTime();
+	        running = true;
+	    }
+
+	    //Stops the stopwatch and returns the time elapsed
+	    public long stop() {
+	        if (!isRunning()) {
+	            return -1;
+	 
+	        } else {
+	            end = System.nanoTime();
+	            running = false;
+	            return end - start;
+	        }
+	    }
+
+	    //calculate time
+	    public long elapsed() {
+	        if (isRunning()) {
+	            return (System.nanoTime() - start);
+	        } else
+	            return (end - start);
+	    }
+
+	    // Returns the number of seconds this Stopwatch has elapsed
+	    public String toString() {
+	        long enlapsed = elapsed();
+	        return (((double) enlapsed / 1000000000.0)) + " seconds";
+	    }
+
 	
 	
 	// ************** DON'T TOUCH THE BELOW CODE ********************** //
