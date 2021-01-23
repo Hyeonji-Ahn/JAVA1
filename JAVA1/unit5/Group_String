@@ -1,0 +1,41 @@
+package unit5;
+
+public class Group_String {
+	
+	public void PigLatin(String str) {
+		System.out.println(str.substring(1)+str.charAt(0)+"ay");
+	}
+	
+	public void change(String str, char ch) {
+		for(int i=0; i<str.length();i++) {
+			if(str.charAt(i) == ch ) {
+				System.out.print("$");
+			}else {
+				System.out.print(str.charAt(i));
+			}
+		}
+		System.out.println();
+	}
+	
+	public void longest(String[] arr) {
+		int max = 0;
+		for(int i=0; i<arr.length; i++) {
+			if(arr[i].length()>arr[max].length()) {
+				max = i;
+			}
+		}
+		System.out.println(arr[max]);
+	}
+	
+	public static void main(String[] args) {
+		Group_String runner = new Group_String();
+		String str = "pig";
+		String str2 = "hello";
+		String strs[] = {"hi","hello","bye"};
+		
+		runner.PigLatin(str);
+		runner.change(str2, 'l');
+		runner.longest(strs);
+		
+	}
+}
