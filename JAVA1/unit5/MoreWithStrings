@@ -1,0 +1,57 @@
+package unit5;
+
+import java.util.Arrays;
+
+public class MoreWithStrings {
+	public void firstandlast(String str) {
+		System.out.println(str.substring(0,2).equals(str.substring(str.length()-2)));
+		//System.out.println(str.charAt(0)==str.charAt(str.length()-2) && str.charAt(1) == str.charAt(str.length()-1) );
+	}
+	
+	public void contained (String str, String contained) {
+		for(int i=0; i<contained.length(); i++) {
+			if(str.indexOf(contained.charAt(i)) == -1) {
+				System.out.println(contained.charAt(i)+": no");
+			}else {
+				System.out.println(contained.charAt(i)+": yes");
+			}
+		}
+	}
+	
+	public void WordCount(String str) {
+		int count =0;
+		for(int i=0; i<str.length(); i++) {
+			if(str.charAt(i) == ' ') {
+				count++;
+			}
+		}
+		System.out.println(count+1);
+	}
+	
+	public void StringsToArray(String str) {
+		String[] words = str.split(" ");
+		System.out.println(Arrays.toString(words));
+	}
+	
+	public void noE(String str) {
+		String withoutE = "";
+		for(int i=0; i<str.length(); i++) {
+			if(str.charAt(i)!='e' && str.charAt(i)!= 'E') {
+				withoutE += str.charAt(i);
+			}
+		}
+		System.out.println(withoutE);
+		
+	}
+	
+	public static void main(String[] args) {
+		MoreWithStrings runner = new MoreWithStrings();
+		String str = "edited";
+		String str2 = "I love me";
+		runner.firstandlast(str);
+		runner.contained(str, "tab");
+		runner.WordCount(str2);
+		runner.StringsToArray(str2);
+		runner.noE(str);
+	}
+}
