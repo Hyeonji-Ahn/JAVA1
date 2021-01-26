@@ -1,0 +1,50 @@
+package unit5;
+
+import java.util.Arrays;
+
+public class ModifyingStrings {
+	
+	public void toMax(String str) {
+		String modified = str.substring(0,str.length()-2)+"est";
+		System.out.println(modified);
+	}
+	
+	public void changePre(String str) {
+		String modified = "un" + str.substring(3);
+		System.out.println(modified);
+	}
+	
+	public void changeSuffix(String str, String suffix) {
+		String modified = str.substring(0, str.length()-suffix.length())+"ine";
+		System.out.println(modified);
+	}
+	
+	public void changeLetter(String str, char target, char replace) {
+		String modified = str;
+		for(int i=0; i<str.length(); i++) {
+			if(str.charAt(i)==target) {
+				modified = modified.substring(0, i) + replace + modified.substring(i+1);
+			}
+		}
+		System.out.println(modified);
+	}
+	
+	public void StringsToArray(String str) {
+		String[] words = str.split(" ");
+		System.out.println(Arrays.toString(words));
+	}
+	
+	public void Replace(String str, String target, String replace) {
+		System.out.println(str.replaceAll(target, replace));
+	}
+	
+	public static void main(String[] args) {
+		ModifyingStrings run = new ModifyingStrings();
+		run.toMax("quickly");
+		run.changePre("predisposed");
+		run.changeSuffix("safer","er");
+		run.changeLetter("david", 'd', 'm');
+		run.StringsToArray("I like CS");
+		run.Replace("I like dogs", "dogs", "cats");
+	}
+}
