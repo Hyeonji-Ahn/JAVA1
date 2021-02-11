@@ -1,0 +1,86 @@
+package unit6;
+
+	
+public class Morewith2DArrays {
+	
+	public void display(int[][] arr) {
+		for(int i=0; i<arr.length; i++) {
+			for(int j=0; j<arr[i].length; j++) {
+				System.out.print(arr[i][j]+" ");
+			}
+			System.out.println();
+		}
+	}
+	
+	public void display(char[][] arr) {
+		for(int i=0; i<arr.length; i++) {
+			for(int j=0; j<arr[i].length; j++) {
+				System.out.print(arr[i][j]);
+			}
+			System.out.println();
+		}
+	}
+	
+	public void display(int[] arr) {
+		for(int i=0; i<arr.length; i++) {
+			System.out.print(arr[i]+" ");
+		}
+	}
+	
+	public void nton2(int n) {
+		int count=1;
+		int[][]arr = new int[n][n];
+		for(int i=0; i<arr.length; i++) {
+			for(int j=0; j<arr[i].length; j++) {
+				arr[i][j] = count;
+				count++;
+			}
+		}
+		display(arr);
+	}
+	
+	public void max(double[][] arr) {
+		double max = arr[0][0];
+		for(int i=0; i<arr.length; i++) {
+			for(int j=0; j<arr[i].length; j++) {
+				if(max<arr[i][j]) {
+					max = arr[i][j];
+				}
+			}
+		}
+		System.out.println(max);
+	}
+
+	public void sum(int[][] arr) {
+		int sum=0;
+		for(int i=0; i<arr.length; i++) {
+			for(int j=0; j<arr[i].length; j++) {
+				sum = sum+ arr[i][j];
+			}
+		}
+		System.out.println(sum);
+	}
+	
+	public void sumOfrow(int[][] arr) {
+		int[]rowsum = new int[arr.length];
+		for(int i=0; i<arr.length; i++) {
+			for(int j=0; j<arr[i].length; j++) {
+				rowsum[i] = rowsum[i]+ arr[i][j];
+			}
+		}
+		display(rowsum);
+		
+	}
+	
+	
+	public static void main(String[] args) {
+		Morewith2DArrays runner = new Morewith2DArrays();
+		int[][] arr = new int [3][4];
+		int[][] arr1 = {{1,2,3},{4,5,6,7}};
+		double[][] arr2 = {{1.5,2.7,3},{4,5.3,6.9}};
+		runner.nton2(3);
+		runner.max(arr2);
+		runner.sum(arr1);
+		runner.sumOfrow(arr1);
+	}
+}
