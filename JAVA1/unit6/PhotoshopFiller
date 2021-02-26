@@ -38,11 +38,11 @@ public class PhotoshopFiller extends Component {
         	for(int j=0; j<pixels[i].length; j++) {
         		Color c = pixels[i][j];
     
-        		int r = c.getRed() + amount;
+        		int r = c.getRed() + amount;  //bright each rgb value by 'amount' 
         		int g = c.getGreen() + amount;
         		int b = c.getBlue() + amount;
         		
-        		if(r>255) {
+        		if(r>255) {  // check any exception
         			r = 255;
         		}
         		if(g>255) {
@@ -61,7 +61,7 @@ public class PhotoshopFiller extends Component {
         			b = 0;
         		}
         		
-        		pixels[i][j]=new Color(r,g,b);
+        		pixels[i][j]=new Color(r,g,b); // set new color
         	}
         }
     }
@@ -73,20 +73,20 @@ public class PhotoshopFiller extends Component {
         if(horizontally) {
         	for(int i=0; i<pixels.length; i++) {
         		for(int j=0; j<pixels[i].length/2; j++) {
-        			Color c_u = pixels[i][j];
-        			Color c_d = pixels[i][pixels[i].length-j-1];
+        			Color c_r = pixels[i][j]; // value of right color
+        			Color c_l = pixels[i][pixels[i].length-j-1]; // value of left color 
             		
-        			pixels[i][j]=c_d;
-        			pixels[i][pixels[i].length-j-1]=c_u;
+        			pixels[i][j]=c_l;  //change color of right and left color
+        			pixels[i][pixels[i].length-j-1]=c_r;
         		}
         	}
         }else{
         	for(int i=0; i<pixels.length/2; i++) {
         		for(int j=0; j<pixels[i].length; j++) {
-        			Color c_u = pixels[i][j];
-        			Color c_d = pixels[pixels.length-1-i][j];
+        			Color c_u = pixels[i][j]; // value of upper color
+        			Color c_d = pixels[pixels.length-1-i][j]; // value of down color
             		
-        			pixels[i][j]=c_d;
+        			pixels[i][j]=c_d; //change color of up color and down color
         			pixels[pixels.length-1-i][j]=c_u;
         		}
         	}
@@ -103,11 +103,11 @@ public class PhotoshopFiller extends Component {
         	for(int j=0; j<pixels[i].length; j++) {
         		Color c = pixels[i][j];
     
-        		int r = 255 - c.getRed();
+        		int r = 255 - c.getRed(); // subtract original color from 255 to get the opposite color
         		int g = 255 - c.getGreen();
         		int b = 255 - c.getBlue();
         		
-        		pixels[i][j]=new Color(r,g,b);
+        		pixels[i][j]=new Color(r,g,b); //set the new color
         	}
         }
     }
@@ -127,12 +127,13 @@ public class PhotoshopFiller extends Component {
         	for(int j=0; j<pixels[i].length; j++) {
         		Color c = pixels[i][j];
         		int minIndex=0;
+        		 // check each color and find the minimum distanced value from the original color
         		for(int a=1; a<colorList.length; a++) {
         			if(distance(c,colorList[a])<distance(c,colorList[minIndex])) {
         				minIndex = a;
         			}
         		}
-        		pixels[i][j] = colorList[minIndex];
+        		pixels[i][j] = colorList[minIndex]; // change color to simpler color.
         		
         	}
         }
@@ -152,7 +153,7 @@ public class PhotoshopFiller extends Component {
 		int g2 = 255 - c2.getGreen();
 		int b2 = 255 - c2.getBlue();
     	double distance = Math.sqrt(Math.pow((r1-r2), 2)+Math.pow((g1-g2), 2)+Math.pow((b1-b2), 2));
-    	return distance;	// fix this
+    	return distance;
     }
     
     // this blurs the image
@@ -161,22 +162,29 @@ public class PhotoshopFiller extends Component {
     // divide this sum by 9, and set it as the rgb value for the blurred image
     public void blur() {
 		outputName = "blurred_" + outputName;
-		for(int i=1; i<pixels.length-1; i++) {
-        	for(int j=1; j<pixels[i].length-1; j++) {
-        		int rsum = 0;
-        		int gsum = 0;
-        		int bsum = 0;
-              	for(int a = i-1; a<i+2; a++) {
-        			for(int b=j-1; b<j+2; b++) {
-        				Color c = pixels[a][b];
-        				rsum += c.getRed();
-        				gsum += c.getGreen();
-        				bsum += c.getBlue();
-        			}
-        		}
-              	pixels[i][j]=new Color(rsum/9,gsum/9,bsum/9);
+		Color[][] pixels_copy = new Color[h][w]; // set new array to make sure every pixels are blurred equally.
+		for(int i=0; i<pixels.length; i++) {
+        	for(int j=0; j<pixels[i].length; j++) {
+        		if(i==0 || j==0 || i==h-1 || j == w-1) { // make border the original color
+        			pixels_copy[i][j]=pixels[i][j];
+        		}else {
+        			Color c = pixels[i][j]; 
+	        		int rsum = 0;
+	        		int gsum = 0;
+	        		int bsum = 0;
+	        		for(int a = i-1; a<i+2; a++) { //add value of surrounding 3*3
+	    				for(int b=j-1; b<j+2; b++) {
+	    					rsum += pixels[a][b].getRed();
+	    					gsum += pixels[a][b].getGreen();
+	    					bsum += pixels[a][b].getBlue();
+	    				}
+	    			}
+	              	pixels_copy[i][j]=new Color((rsum-c.getRed())/9,(gsum-c.getGreen())/9,(bsum-c.getBlue())/9); 
+	              	//subtract the original rgb value so that it can only have color of surround
+	        	}
         	}
 		}
+		pixels = pixels_copy;
 	}
     
     // this highlights the edges in the image, turning everything else black. 
@@ -185,53 +193,122 @@ public class PhotoshopFiller extends Component {
     // this value is the rgb value for the 'edged' image
     public void edge() {
         outputName = "edged_" + outputName;
-
-        for(int i=1; i<pixels.length-1; i++) {
-        	for(int j=1; j<pixels[i].length-1; j++) {
+        Color[][] pixels_copy = new Color[pixels.length][pixels[0].length];
+        
+        for(int i=0; i<pixels.length; i++) {
+        	for(int j=0; j<pixels[i].length; j++) {
         		int rsum = 0;
         		int gsum = 0;
         		int bsum = 0;
-              	for(int a = i-1; a<i+2; a++) {
-        			for(int b=j-1; b<j+2; b++) {
-        				Color c = pixels[a][b];
-        				rsum += c.getRed();
-        				gsum += c.getGreen();
-        				bsum += c.getBlue();
+        		if(i==0 || j==0 || i==h-1 || j == w-1) { // make border black
+        			pixels_copy[i][j]=Color.black;
+        		}
+        		else {
+        			for(int a = i-1; a<i+2; a++) { //add value of surrounding 3*3
+        				for(int b=j-1; b<j+2; b++) {
+        					rsum += pixels[a][b].getRed();
+        					gsum += pixels[a][b].getGreen();
+        					bsum += pixels[a][b].getBlue();
+        				}
         			}
-        		}
-              	Color c = pixels[i][j];
-              	int r = c.getRed();
-        		int g = c.getGreen();
-        		int b = c.getBlue();
+        			Color c = pixels[i][j];
+        			int r = c.getRed();
+        			int g = c.getGreen();
+        			int b = c.getBlue();
         		
-              	int newr =r*9 - rsum ;
-              	int newg = g*9 - gsum ;
-              	int newb =b*9-  bsum ;
+        			int newr =r*9 - rsum ; //subtract the original value from the sum
+        			int newg = g*9 - gsum ;
+	              	int newb =b*9-  bsum ;
+	              	
+	              	if(newr>255) { //make sure that the value do not go over 255 or below 0. 
+	        			newr = 255;
+	        		}
+	        		if(newg>255) {
+	        			newg = 255;
+	        		}
+	        		if(newb>255) {
+	        			newb = 255;
+	        		}
+	        		if(newr<0) {
+	        			newr = 0;
+	        		}
+	        		if(newg<0) {
+	        			newg = 0;
+	        		}
+	        		if(newb<0) {
+	        			newb = 0;
+	        		}
         		
-              	if(newr>255) {
-        			newr = 255;
-        		}
-        		if(newg>255) {
-        			newg = 255;
-        		}
-        		if(newb>255) {
-        			newb = 255;
-        		}
-        		if(newr<0) {
-        			newr = 0;
-        		}
-        		if(newg<0) {
-        			newg = 0;
-        		}
-        		if(newb<0) {
-        			newb = 0;
+	        		pixels_copy[i][j]=new Color(newr,newg,newb);
+	        		
         		}
         		
-              	pixels[i][j]=new Color(newr,newg,newb);
         	}
-		}
+        	
+        }
+        pixels = pixels_copy; //move copy to the original array to make a image with it
     }
     
+    public void grayscale() {
+        outputName = "grayscaled_" + outputName;
+        for(int i=0; i<pixels.length; i++) {
+        	for(int j=0; j<pixels[i].length; j++) {
+        		Color c = pixels[i][j];
+        		int avg = (c.getRed() + c.getGreen() +  c.getBlue())/3; // add all color and get average
+        		pixels[i][j]=new Color(avg,avg,avg); // set new color to have same rgb value
+        	}
+        }
+    }
+    
+    //following red, green, blue scaled functions are similar to the gray scaled but have double rgb values. 
+    
+    public void redscale() {
+        outputName = "redscaled_" + outputName;
+        for(int i=0; i<pixels.length; i++) {
+        	for(int j=0; j<pixels[i].length; j++) {
+        		Color c = pixels[i][j];
+        		int avg = (c.getRed() + c.getGreen() +  c.getBlue())/3;
+        		int newred = avg*2; 
+        		if(newred>255) { // check exception
+        			newred = 255;
+        		}
+        		pixels[i][j]=new Color(newred,avg,avg);
+        		
+        	}
+        }
+    }
+    
+    public void greenscale() {
+        outputName = "greenscaled_" + outputName;
+        for(int i=0; i<pixels.length; i++) {
+        	for(int j=0; j<pixels[i].length; j++) {
+        		Color c = pixels[i][j];
+        		int avg = (c.getRed() + c.getGreen() +  c.getBlue())/3;
+        		int newgreen = avg*2;
+        		if(newgreen>255) { // check exception
+        			newgreen = 255;
+        		}
+        		pixels[i][j]=new Color(avg,newgreen,avg);
+        		
+        	}
+        }
+    }
+    public void bluescale() {
+        outputName = "bluescaled_" + outputName;
+        for(int i=0; i<pixels.length; i++) {
+        	for(int j=0; j<pixels[i].length; j++) {
+        		Color c = pixels[i][j];
+        		int avg = (c.getRed() + c.getGreen() +  c.getBlue())/3;
+        		int newblue = avg*2;
+        		if(newblue>255) { // check exception
+        			newblue = 255;
+        		}
+        		pixels[i][j]=new Color(avg,avg,newblue);
+        		
+        	}
+        }
+    }
+
     
     // *************** DON'T MESS WITH THE BELOW CODE **************** //
     
@@ -243,7 +320,7 @@ public class PhotoshopFiller extends Component {
     public void run() {
     	JFileChooser fc = new JFileChooser();
 		File workingDirectory = new File(System.getProperty("user.dir")+System.getProperty("file.separator")+ "Images");
-//		fc.setCurrentDirectory(workingDirectory);
+        // fc.setCurrentDirectory(workingDirectory);
 		fc.showOpenDialog(null);
 		File my_file = fc.getSelectedFile();
 		if (my_file == null)
@@ -261,7 +338,7 @@ public class PhotoshopFiller extends Component {
 			
 			// runs the manipulations determined by the user
 			System.out.println("Enter the manipulations you would like to run on the image.\nYour "
-					+ "choices are: brighten, flip, negate, blur, edge, or simplify.\nEnter each "
+					+ "choices are: brighten, flip, negate, blur, edge,\n grayscale, redscale, bluescale, greenscale or simplify.\nEnter each "
 					+ "manipulation you'd like to run, then type in 'done'.");
 			Scanner in = new Scanner(System.in);
 			String action = in.next().toLowerCase();
