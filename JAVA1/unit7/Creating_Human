@@ -1,0 +1,63 @@
+package unit7;
+
+public class Creating_Human {
+	
+	private int age;
+	private String name;
+	
+	public Creating_Human(int a, String n) {
+		age = a;
+		name = n;
+	}
+	//a display method that prints out the information for this human
+	public int getAge() {
+		return age;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	//a getOlder method that increases its age by 1, 
+	public void getOlder(){
+		age ++;
+	}
+	
+	//a changeName method that allows the user to change this human's name, 
+	public void setName(String Newname) {
+		name = Newname;
+	}
+	
+	public String toString() {
+		return " name: "+name+"\n age: "+age;
+	}
+	
+	//a canVote method that takes a year as input:
+	//if the year is an election year (2012, 2016, 2020, etc) and the human is at least 18, this human can vote. 
+	public void canVote(int year) {
+		if(year%4==0) {
+			if(year-2021+age>=18) {
+				System.out.println(name+ " can vote in "+ year);
+			}
+			else {
+				System.out.println(name+ " cannot vote in "+ year);
+			}
+		}else {
+			System.out.println(name+ " cannot vote in "+ year);
+		}
+	}
+	
+	public static void main(String[] args) {
+		Creating_Human Tiffany = new Creating_Human(15, "Tiffany");
+		
+		Tiffany.getOlder();
+		System.out.println(Tiffany);
+		System.out.println();
+		
+		Tiffany.setName("Anika");
+		System.out.println(Tiffany);
+		System.out.println();
+		
+		Tiffany.canVote(2024);
+	}
+}
