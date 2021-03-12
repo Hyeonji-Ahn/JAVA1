@@ -1,0 +1,33 @@
+package unit7;
+
+public class Car {
+	private String name;
+	private int year;
+	private int mileage;
+	
+	
+	public Car(String name, int year, int mileage) {
+		this.name = name;
+		this.year = year;
+		this.mileage = mileage;
+	}
+	
+	//first, a method called drive. This method takes a parameter distance.
+	//When this method is called, the mileage increases by the distance driven.
+	
+	public void drive(int parameter) {
+		mileage += parameter;
+	}
+	
+	//This method should return a number representing how much this Car is currently worth. 
+	//Come up with a formula to calculate the Car's worth 
+	//- it should involve how old it is and how many miles it's driven 
+	public int worth(int currentYear) {
+		return (currentYear - year)*5 - mileage;
+	}
+	
+	public int getMileage() {
+		return mileage;
+	}
+	
+}
