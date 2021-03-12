@@ -1,0 +1,44 @@
+package unit7;
+
+public class Garage {
+	private Car[] Cars;
+	
+	public Garage(int n) {
+		Cars = new Car[n];
+	}
+	
+	public void addCar(int i, String name, int year, int mileage) {
+		Cars[i] = new Car(name,year,mileage);
+	}
+	
+	public int totalWorth(int currentYear) {
+		int sum = 0;
+		for(int i=0; i<Cars.length; i++) {
+			if(Cars[i] != null) {
+				sum += Cars[i].worth(currentYear);
+			}
+		}
+		return sum;
+	}
+	
+	public int aveMileage() {
+		int sum = 0;
+		int count = 0;
+		
+		for(Car c : Cars) {
+			if(c != null) {
+				sum += c.getMileage();
+				count++;
+			}
+		}
+		return sum/count;
+	}
+	
+	public static void main(String[] args) {
+		Garage g = new Garage(3);
+		g.addCar(0,"No1",2010, 40);
+		g.addCar(1, "No2", 2000, 60);
+		System.out.println(g.totalWorth(2021));
+		System.out.println(g.aveMileage());
+	}
+}
