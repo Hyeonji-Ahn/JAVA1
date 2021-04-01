@@ -1,0 +1,47 @@
+package unit7;
+
+import java.util.Scanner;
+
+public class Movie {
+	private String name;
+	private int year;
+	private int rate;
+	
+	public Movie(String name, int year, int rate) {
+		this.name = name;
+		this.year = year;
+		this.rate = rate;
+	}
+	
+	public String toString() {
+		return name+", "+year+", "+rate;
+	}
+	
+	public void rateMovie(int newrate) {
+		rate = (rate + newrate) / 2;
+	}
+	
+	public int getRate() {
+		return rate;
+	}
+	
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		System.out.println("Name:");
+		String name = s.nextLine(); 
+		System.out.println("Year:");
+		int year = s.nextInt();
+		System.out.println("rate:");
+		int rate = s.nextInt();
+		
+		Movie newmovie;
+	
+		newmovie = new Movie(name,year,rate);
+		System.out.println(newmovie);
+		newmovie.rateMovie(5);
+		System.out.println(newmovie);
+		
+		
+	}
+	
+}
