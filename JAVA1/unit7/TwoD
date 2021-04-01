@@ -1,0 +1,83 @@
+package unit7;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class TwoD extends Animation{
+	private String genre;
+	private String production;
+	private String originalAnime;
+	
+	public TwoD(String name, int year, int rate, String[] voiceActors, String OST, int OSTrate, String genre, String production, String originalAnime) {
+		super(name, year, rate, voiceActors, OST,OSTrate);
+		this.genre = genre;
+		this.originalAnime = originalAnime;
+		this.production = production;
+	}
+	
+	public TwoD(String name, int year, int rate, String[] voiceActors, String OST, int OSTrate, String genre, String production) {
+		super(name, year, rate, voiceActors, OST,OSTrate);
+		this.genre = genre;
+		this.production = production;
+	}
+	
+	public String toString() {
+		if(originalAnime == null) {
+			return super.toString()+ "\n"+ "Genre:"+genre + "Production:" +production;
+		}
+		else {
+			return super.toString()+ "\n"+ "Genre:"+genre + "Production:" +production +"\n Original Series: "+ originalAnime;
+		}
+	}
+	
+	public void addGenre(String newGenre) {
+		genre += ", "+newGenre;
+	}
+	
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		System.out.println("Name:");
+		String name = s.nextLine(); 
+		System.out.println("Year:");
+		int year = s.nextInt();
+		System.out.println("Rate:");
+		int rate = s.nextInt();
+		System.out.println("How many voice actors in the movie?");
+		int numva = s.nextInt();
+		String[] voiceActors = new String[numva];
+		for(int i=0; i<numva; i++) {
+			System.out.println("Name of Voice Actor "+(i+1)+":");
+			voiceActors[i] = s.next();
+		}
+		System.out.println("OST:");
+		String OST = s.next();
+		System.out.println("OST rate:");
+		int OSTrate = s.nextInt();
+		System.out.println("Genre:");
+		String genre = s.next();
+		System.out.println("Production:");
+		String production = s.next();
+		
+		TwoD new2Danimation;
+		System.out.println("Original animation (If there is no original series, write n): ");
+		String originalAnime = s.next();
+		if(!originalAnime.equals("n")) {
+			new2Danimation = new TwoD(name, year, rate, voiceActors, OST,OSTrate, genre,production,originalAnime);
+			
+		}else {
+			new2Danimation = new TwoD(name, year, rate, voiceActors, OST,OSTrate, genre,production);
+			
+		}
+		
+		
+		System.out.println(new2Danimation);
+		new2Danimation.rateMovie(5);
+		System.out.println(new2Danimation);
+		System.out.println(new2Danimation.totalrate());
+		new2Danimation.addGenre("Horror");
+		System.out.println(new2Danimation);
+		
+		
+		
+	}
+}
