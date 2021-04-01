@@ -1,0 +1,57 @@
+package unit7;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Animation extends Movie{
+	private String[] voiceActors;
+	private String OST;
+	private int OSTrate;
+	
+	public Animation(String name, int year, int rate, String[] voiceActors, String OST,int OSTrate) {
+		super(name,year,rate);
+		this.voiceActors = voiceActors;
+		this.OST = OST;
+		this.OSTrate = OSTrate;
+	}
+	
+	public String toString() {
+		return super.toString()+ "\n "+Arrays.toString(voiceActors)+ "\nOST: "+OST+" OSTrate:"+OSTrate;
+	}
+	
+	public double totalrate() {
+		return getRate()*10 + OSTrate*5 / 10;
+	}
+	
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		System.out.println("Name:");
+		String name = s.nextLine(); 
+		System.out.println("Year:");
+		int year = s.nextInt();
+		System.out.println("Rate:");
+		int rate = s.nextInt();
+		System.out.println("How many voice actors in the movie?");
+		int numva = s.nextInt();
+		String[] voiceActors = new String[numva];
+		for(int i=0; i<numva; i++) {
+			System.out.println("Name of Voice Actor "+(i+1)+":");
+			voiceActors[i] = s.next();
+		}
+		System.out.println("OST:");
+		String OST = s.next();
+		System.out.println("OST rate:");
+		int OSTrate = s.nextInt();
+		
+		Animation newanimation;
+	
+		newanimation = new Animation(name, year, rate, voiceActors, OST,OSTrate);
+		System.out.println(newanimation);
+		newanimation.rateMovie(5);
+		System.out.println(newanimation);
+		System.out.println(newanimation.totalrate());
+		
+		
+	}
+	
+}
