@@ -3,92 +3,86 @@ package unit7;
 import java.util.Scanner;
 
 public class BankAccount {
-	private int money;
-	private double rate;
+	private int balance;
 	private String name;
 	
 	//The first takes parameters for all 3 variables. 
 	
-	public BankAccount(int money, double rate, String name) {
-		this.rate = rate;
-		this.money = money;
+	public BankAccount(int balance, String name) {
+		this.balance = balance;
 		this.name = name;
-			
 	}
 	
 	//The second should only take two parameters - a String and a double. 
 	//This constructor assumes that the bank account starts with no money in it.
-	public BankAccount(double rate, String name) {
-		this.money = 0;
-		this.rate = rate;
+	public BankAccount(String name) {
+		this.balance = 0;
 		this.name = name;
 	}
 	
 	//deposit(int n): this method should add the given amount of money to the current total in the bank.
 	public void deposit(int n) {
-		money += n;
+		balance += n;
 	}
 	
 	//withdraw(int n): this method should subtract the given amount of money from the current total.
 	public void withdraw(int n) {
-		money -= n;
+		balance -= n;
 	}
 	
-	//addInterest(): this method should calculate this month's interest and add it to the current total.
-	public void addInterest() {
-		money += money * (rate /100);
+	public int getBalance() {
+		return balance;
 	}
+	
+	public void setBalance(int newBalance) {
+		balance = newBalance;
+	}
+	
+
 	
 	//display(): this method should simply display how much money is in the account.
 	public String toString() {
-		return "Name:"+name+"\n"+" Current money: "+money+"$ \n" + "Interest Rate:"+rate+"% \n";
+		return "Name:"+name+"\n"+" Current money: "+balance+"$ \n";
 	}
 	
 	public static void main(String[] args) {
 		Scanner s = new Scanner(System.in);
 		System.out.println("Name:");
 		String name = s.nextLine(); 
-		System.out.println("Rate:");
-		Double rate = s.nextDouble();
 		System.out.println("Current value:");
-		int money = s.nextInt();
+		int balance = s.nextInt();
 		
 		BankAccount newaccount;
-		if(money ==0) {
-			newaccount = new BankAccount(rate,name);
+		if(balance ==0) {
+			newaccount = new BankAccount(name);
 		}else {
-			newaccount = new BankAccount(money, rate,name);
+			newaccount = new BankAccount(balance,name);
 		}
 		
 		
 		System.out.println(" 1: deposit \n 2: withdraw \n 3:add interest \n 4:display \n 5:stop the system");
 		int userinput = s.nextInt();
 		
-		while (userinput != 5){
+		while (userinput != 4){
 			if(userinput == 1) {
 				System.out.println("How much money would you deposit:");
 				int deposit = s.nextInt();
 				newaccount.deposit(deposit);
-				System.out.println(" 1: deposit \n 2: withdraw \n 3:add interest \n 4:display \n 5:stop the system");
+				System.out.println(" 1: deposit \n 2: withdraw \n 3:display \n 4:stop the system");
 				userinput = s.nextInt();
 			}else if(userinput == 2) {
 				System.out.println("How much money would you withdraw:");
 				int withdraw = s.nextInt();
 				newaccount.withdraw(withdraw);
-				System.out.println(" 1: deposit \n 2: withdraw \n 3:add interest \n 4:display \n 5:stop the system");
+				System.out.println(" 1: deposit \n 2: withdraw \n 3:display \n 4:stop the system");
 				userinput = s.nextInt();
 			}else if(userinput == 3) {
-				newaccount.addInterest();
-				System.out.println(rate+"% was increased");
-				System.out.println(" 1: deposit \n 2: withdraw \n 3:add interest \n 4:display \n 5:stop the system");
-				userinput = s.nextInt();
-			}else if(userinput == 4) {
 				System.out.println(newaccount);
-				System.out.println(" 1: deposit \n 2: withdraw \n 3:add interest \n 4:display \n 5:stop the system");
+				System.out.println(" 1: deposit \n 2: withdraw \n 3:display \n 4:stop the system");
 				userinput = s.nextInt();
 			}else {
 				System.out.println("Invalid action. Please try again");
-				System.out.println(" 1: deposit \n 2: withdraw \n 3:add interest \n 4:display \n 5:stop the system");
+				System.out.println(" 1: deposit \n 2: withdraw \n 3:display \n 4:stop the system");
 				userinput = s.nextInt();
 			}
 		}
