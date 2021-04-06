@@ -1,0 +1,77 @@
+package unit7;
+
+import java.util.Scanner;
+
+public class CreditCard extends InterestAccount{
+	public CreditCard (int balance, String name, double interest) {
+		super(balance,name,interest);
+	}
+	
+	public CreditCard (String name, double interest) {
+		super(name,interest);
+	}
+	
+	public void addInterest() {
+		setBalance((int)(getBalance() * (getInterest() /100 + 1)-10));
+	}
+	
+	public void withdraw(int n) {
+		if(getBalance()<100) {
+			System.out.println("you cannot withdraw as the account holds less than $100");
+		}else {
+			super.withdraw(n);
+		}
+	}
+	
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		System.out.println("Name:");
+		String name = s.nextLine(); 
+		System.out.println("Interest Rate:");
+		Double rate = s.nextDouble();
+		System.out.println("Current value:");
+		int balance = s.nextInt();
+		
+		CreditCard newaccount;
+		if(balance ==0) {
+			newaccount = new CreditCard(name,rate);
+		}else {
+			newaccount = new CreditCard(balance,name,rate);
+		}
+		
+		
+		System.out.println(" 1: deposit \n 2: withdraw \n 3:add interest \n 4:display \n 5:stop the system");
+		int userinput = s.nextInt();
+		
+		while (userinput != 5){
+			if(userinput == 1) {
+				System.out.println("How much money would you deposit:");
+				int deposit = s.nextInt();
+				newaccount.deposit(deposit);
+				System.out.println("1: deposit \n 2: withdraw \n 3:add interest \n 4:display \n 5:stop the system");
+				userinput = s.nextInt();
+			}else if(userinput == 2) {
+				System.out.println("How much money would you withdraw:");
+				int withdraw = s.nextInt();
+				newaccount.withdraw(withdraw);
+				System.out.println("1: deposit \n 2: withdraw \n 3:add interest \n 4:display \n 5:stop the system");
+				userinput = s.nextInt();
+			}else if(userinput == 3) {
+				newaccount.addInterest();
+				System.out.println("1: deposit \n 2: withdraw \n 3:add interest \n 4:display \n 5:stop the system");
+				userinput = s.nextInt();
+			}else if(userinput == 4) {
+				System.out.println(newaccount);
+				System.out.println("1: deposit \n 2: withdraw \n 3:add interest \n 4:display \n 5:stop the system");
+				userinput = s.nextInt();
+			}else {
+				System.out.println("Invalid action. Please try again");
+				System.out.println("1: deposit \n 2: withdraw \n 3:add interest \n 4:display \n 5:stop the system");
+				userinput = s.nextInt();
+			}
+		}
+		
+		System.out.println("Thank you for using the sytem");
+		s.close();
+	}
+}
