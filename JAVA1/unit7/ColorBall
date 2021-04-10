@@ -1,0 +1,28 @@
+package unit7;
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class ColorBall extends BouncingBall {
+	
+	private int ColorDelay = 10;
+	private Color c = Color.BLUE;
+	
+	public ColorBall(int startx, int starty, int startrad, int startxspeed, int startyspeed) {
+		super( startx,starty, startrad, startxspeed, startyspeed, Color.BLACK);
+	}
+	
+	public void draw(Graphics g) {
+		if(ColorDelay==10) {
+			c = new Color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
+			g.setColor(c);
+			ColorDelay = 0;
+		}else {
+			g.setColor(c);
+			ColorDelay ++;
+		}
+		g.fillOval(getX(), getY(), getRad(), getRad());
+	}
+	
+	
+}
