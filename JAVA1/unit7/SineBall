@@ -1,0 +1,20 @@
+package unit7;
+
+import java.awt.Color;
+
+public class SineBall extends BouncingBall{
+	
+	public SineBall(int startx, int starty, int startrad, int startxspeed, int startyspeed, Color color) {
+		super( startx,starty, startrad, startxspeed, startyspeed, color);
+	}
+
+	public void move() {
+		setX(getX() + getXSpeed());
+		setY((int)(50*Math.sin(getX()/7))+HEIGHT/2);
+		
+		if(getX() >= WIDTH-getRad() || getX() <= 0) {
+			setXSpeed(-1 * getXSpeed());
+			setColor(new Color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256)));
+		}
+	}
+}
