@@ -1,0 +1,19 @@
+package unit7;
+
+import java.awt.Color;
+
+public class BouncingBall extends Ball {
+	public BouncingBall(int startx, int starty, int startrad, int startxspeed, int startyspeed, Color startcolor) {
+		super( startx,starty, startrad, startxspeed, startyspeed, startcolor);
+	}
+	
+	public void move() {
+		super.move();
+
+		if(getX() >= WIDTH-getRad() || getX() <= 0) {
+			setXSpeed(-1 * getXSpeed());
+		}else if(getY() >= HEIGHT-getRad() || getY() <= 0) {
+			setYSpeed(-1 * getYSpeed());
+		}
+	}
+}
