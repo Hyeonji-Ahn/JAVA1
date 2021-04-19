@@ -1,0 +1,21 @@
+package inheritance;
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class Polygon extends Shape{
+	
+	public Polygon(int startx, int starty) {
+		super(startx, starty);
+	}
+	
+	
+	public void draw(Graphics g) {
+		g.setColor(Color.GREEN);
+		int[] x = {getX()-45,getX(),getX()+35};
+		int[] y = {getY()-25,getY(),getY()+50};
+		g.drawPolygon(x,y, 3);
+	}
+	
+	
+}
