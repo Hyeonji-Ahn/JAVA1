@@ -1,0 +1,39 @@
+package inheritance;
+
+public class Depressed extends ChatBot{
+
+	@Override
+	public void sayHi() {
+		System.out.println("Hello.. How are you today..?");
+		
+	}
+
+	@Override
+	public void sayBye() {
+		System.out.println("Thank you for talking with me..");
+		
+	}
+
+	@Override
+	public void startConversation() {
+		System.out.println("I feel so sad today.. what do you do when you are sad?..");
+	}
+
+	@Override
+	public void askFirstQuestion() {
+		System.out.println("Oh.. Why do you do that..?");
+		
+	}
+
+	@Override
+	public void askSecondQuestion() {
+		System.out.println("I will try that.. Why do you think everything is so depressed these days..?");
+		
+	}
+
+	@Override
+	public void askThirdQuestion() {
+		System.out.println("Are you sad too?");		
+	}
+
+}
