@@ -1,0 +1,39 @@
+package inheritance;
+
+public class Happy extends ChatBot{
+
+	@Override
+	public void sayHi() {
+		System.out.println("Hi!! How are you today?");
+		
+	}
+
+	@Override
+	public void sayBye() {
+		System.out.println("It was so nice to talk with you! See you again");
+	}
+
+	@Override
+	public void startConversation() {
+		System.out.println("I feel so nice today! It is the best day ever");
+		
+	}
+
+	@Override
+	public void askFirstQuestion() {
+		System.out.println("What do you want to do today?");
+	}
+
+	@Override
+	public void askSecondQuestion() {
+		System.out.println("That sounds fun!! Will you do that with someone else?");
+		
+	}
+
+	@Override
+	public void askThirdQuestion() {
+		System.out.println("Hmm!!! What do you want to eat today?");
+		
+	}
+
+}
