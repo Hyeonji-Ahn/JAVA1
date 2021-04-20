@@ -1,0 +1,35 @@
+package inheritance;
+
+public class Angry extends ChatBot{
+
+	@Override
+	public void sayHi() {
+		System.out.println("What? You want to talk with me??");
+	}
+
+	@Override
+	public void sayBye() {
+		System.out.println("Ugh ok, Goodbye and let's don't meet each other again");
+	}
+
+	@Override
+	public void startConversation() {
+		System.out.println("Ughh Ok fine. Who are you?");
+	}
+
+	@Override
+	public void askFirstQuestion() {
+		System.out.println("Oh, What did you do today?");
+	}
+
+	@Override
+	public void askSecondQuestion() {
+		System.out.println("Meh not fun. What do you do in your free time? Probably something not fun, isn't it?");
+	}
+
+	@Override
+	public void askThirdQuestion() {
+		System.out.println("Ha my thought was right. By the way why did you join this chat?");
+	}
+
+}
