@@ -1,0 +1,51 @@
+package unit8;
+
+import java.util.ArrayList;
+
+public class More_List_Algorithms {
+
+	public static void posneg (int n, int x){
+		
+		ArrayList<Integer> nums = new ArrayList<Integer>();
+		for(int i=0; i<n; i++) {
+			nums.add((int) (Math.random()*2*x-x));
+		}
+		
+		ArrayList<Integer> positives = new ArrayList<Integer>();
+		ArrayList<Integer> negatives = new ArrayList<Integer>();
+		
+		for(int i : nums) {
+			if(i>=0) {
+				positives.add(i);
+			}else {
+				negatives.add(i);
+			}
+		}
+		System.out.println(positives);
+		System.out.println(negatives);
+		
+	}
+	
+	public static void reverse( ArrayList<Double> nums){
+		
+		double temp;
+		
+		for(int i=0; i<nums.size(); i++) {
+			nums.add(i, nums.remove(nums.size()-1));
+		}
+		
+	}
+	
+	public static void main(String[] args) {
+		posneg(5,50);
+		ArrayList<Double>nums = new ArrayList<Double>();
+		nums.add(1.2);
+		nums.add(2.3);
+		nums.add(3.6);
+		nums.add(4.1);
+		System.out.println(nums);
+		reverse(nums);
+		System.out.println(nums);
+		
+	}
+}
