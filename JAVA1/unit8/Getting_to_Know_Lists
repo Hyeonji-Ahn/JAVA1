@@ -1,0 +1,85 @@
+package unit8;
+
+import java.util.ArrayList;
+
+public class Getting_to_Know_Lists {
+	public static ArrayList<Character> removeOdd(ArrayList<Character> words) {
+		
+		ArrayList<Character> l = new ArrayList<Character>();
+		for(int i=1; i<words.size(); i++) {
+			l.add(words.get(i));
+			i++;
+		}
+		
+		return l;
+	}
+	
+	public static ArrayList<String> backward(ArrayList<String> words){
+		
+		ArrayList<String>back = new ArrayList<String>();
+		
+		for(int i=0;i<words.size();i++) {
+			back.add(words.get(words.size()-i-1));
+		}
+		
+		
+		return back;
+		
+	}
+	
+	public static ArrayList<Double> doubled (ArrayList<Double> nums){
+		
+		ArrayList<Double> doubled = new ArrayList<Double>();
+		
+		for(double n : nums) {
+			doubled.add(n*2);
+		}
+		
+		return doubled;
+	}
+	
+	public static ArrayList<Character> alphabet (int n){
+		
+		ArrayList<Character> chars = new ArrayList<Character>();
+		char counter = 'a';
+		
+		for(int i=0; i<n; i++) {
+			if(i%2 !=0) {
+				chars.add(counter);
+				counter = (char)((int)counter + 1);
+			}else {
+				chars.add(0,counter);
+				counter = (char)((int)counter + 1);
+			}
+		}
+		
+		return chars;
+
+	}
+	
+	public static void main(String[] args) {
+		ArrayList<Character> c = new ArrayList<Character>();
+		c.add('a');
+		c.add('b');
+		c.add('c');
+		c.add('d');
+		c.add('e');
+		ArrayList<String> s = new ArrayList<String>();
+		s.add("world");
+		s.add("pokemon");
+		s.add("cookie");
+		ArrayList<Double> d = new ArrayList<Double>();
+		d.add(1.5);
+		d.add(4.5);
+		d.add(5.4);
+		System.out.println(c);
+		System.out.println(removeOdd(c));
+		System.out.println(s);
+		System.out.println(backward(s));
+		System.out.println(d);
+		System.out.println(doubled(d));
+		System.out.println(alphabet(5));
+		
+		
+	}
+}
