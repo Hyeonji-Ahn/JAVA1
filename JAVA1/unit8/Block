@@ -1,0 +1,38 @@
+package unit8;
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+import com.sun.source.tree.NewClassTree;
+
+public class Block {
+	private int x;
+	private int y;
+	private Color c;
+	private int speed;
+	
+	public Block(int x, int y) {
+		this.x = x;
+		this.y = y;
+		speed = (int)(Math.random()*20);
+		c = new Color ((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
+	}
+	
+	public void draw(Graphics g) {
+		g.setColor(c);
+		g.fillRect(x, y, 10, 10);
+	}
+	
+	public void move() {
+		y += speed;
+	}
+	
+	public int getY() {
+		return y;
+	}
+	
+	public int getSpeed() {
+		return speed;
+	}
+	
+}
